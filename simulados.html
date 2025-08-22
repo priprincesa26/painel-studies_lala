@@ -396,10 +396,10 @@
     <script>
         // ######### INÍCIO DA SEÇÃO DE CONFIGURAÇÃO DO FIREBASE #########
         const firebaseConfig = {
-            apiKey: "AIzaSyD6msk2NG3gfyPKhjZJ4HB1X6SJ8ICzSMg", // SUA API KEY
+            apiKey: "AIzaSyD6msk2NG3gfyPKhjZJ4HB1X6SJ8ICzSMg",
             authDomain: "painel-de-controle-para-o-enem.firebaseapp.com",
             projectId: "painel-de-controle-para-o-enem",
-            storageBucket: "painel-de-controle-para-o-enem.appspot.com",
+            storageBucket: "painel-de-controle-para-o-enem.appspot.com", // CORRIGIDO
             messagingSenderId: "144604369875",
             appId: "1:144604369875:web:c113d74ba1b0ddd1629526",
             measurementId: "G-W7PM1J1FNN"
@@ -646,10 +646,9 @@
                 const snapshot = await ref.orderBy("date", "desc").get();
                 simulados = snapshot.docs.map(doc => {
                     const data = doc.data();
-                    // Converte Timestamps para objetos Date
-                    const date = data.date && data.date.toDate ? data.date.toDate() : new Date(0); // Fallback
+                    const date = data.date && data.date.toDate ? data.date.toDate() : new Date(0);
                     const addedTimestamp = data.addedTimestamp && data.addedTimestamp.toDate ? data.addedTimestamp.toDate() : new Date(0);
-                    const lastModifiedTimestamp = data.lastModifiedTimestamp && data.lastModifiedTimestamp.toDate ? data.lastModifiedTimestamp.toDate() : date; // Fallback para data do simulado
+                    const lastModifiedTimestamp = data.lastModifiedTimestamp && data.lastModifiedTimestamp.toDate ? data.lastModifiedTimestamp.toDate() : date;
 
                     return { 
                         id: doc.id, ...data,
@@ -676,9 +675,7 @@
     </script>
 </body>
 </html>
-    </script>
-</body>
-</html>
+
 
 
 
