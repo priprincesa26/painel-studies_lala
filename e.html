@@ -97,71 +97,6 @@
             outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(255, 77, 141, 0.2);
         }
         .form-group textarea { min-height: 120px; resize: vertical; line-height: 1.7; }
-        
-        .image-upload-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .image-upload-btn {
-            background-color: var(--primary-light);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            border: none;
-            font-size: 0.9rem;
-        }
-        .image-preview-container {
-            margin-top: 15px;
-            position: relative;
-            display: none;
-        }
-        .image-preview {
-            max-width: 100%;
-            max-height: 200px;
-            border-radius: 8px;
-            border: 2px solid var(--border-color);
-        }
-        .remove-image-btn {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .spinner-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 8px;
-            display: none;
-        }
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--primary-color);
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
 
         .clickable-cell-group { display: flex; gap: 10px; margin-top: 10px; }
         .clickable-cell {
@@ -262,13 +197,6 @@
         .close-view-modal { background: none; border: none; font-size: 28px; cursor: pointer; color: var(--text-color); position: absolute; top: 15px; right: 15px; transition: transform 0.2s; }
         .close-view-modal:hover { transform: rotate(90deg); color: var(--primary-dark); }
         .questao-text-content { line-height: 1.8; font-size: 16px; margin-bottom: 25px; padding: 20px; background-color: #fffafc; border-radius: 8px; border-left: 5px solid var(--primary-color); box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        
-        .view-image {
-            max-width: 100%;
-            margin-top: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
         .answer-section { margin: 30px 0; border-top: 2px solid var(--border-color); padding-top: 25px; }
         .show-answer { background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; margin-bottom: 15px; }
         .answer { display: none; padding: 15px; background-color: #fff8fa; border-radius: 4px; border-left: 4px solid var(--primary-color); }
@@ -376,6 +304,16 @@
         .review-questao-card .checkbox-group label { font-size: 0.9em; margin-left: 5px; cursor: pointer; }
         .review-questao-card input[type="checkbox"] { accent-color: var(--primary-color); cursor: pointer; }
 
+        .regenerate-schedule-btn-container {
+            text-align: center;
+            margin-top: 10px; 
+            margin-bottom: 10px;
+        }
+        .regenerate-schedule-btn { /* Estilo do botão removido, pois o botão foi removido */
+           /* display: none; */ /* Esconde o botão já que não é mais necessário para "regerar aleatoriamente" */
+        }
+
+
         @media (max-width: 1000px) {
             .questoes-container { grid-template-columns: repeat(2, 1fr); }
             #revisaoEnemSection { flex-direction: column; }
@@ -443,6 +381,10 @@
                     <button id="nextMonthBtn">Próximo <i class="fas fa-chevron-right"></i></button>
                 </div>
                 <div id="enemCalendarGrid"></div>
+                 <div class="regenerate-schedule-btn-container">
+                    <!-- Botão removido ou comentado pois sua função original não é mais necessária -->
+                    <!-- <button id="regenerateScheduleBtn" class="regenerate-schedule-btn"><i class="fas fa-sync-alt"></i> Regerar Cronograma</button> -->
+                </div>
             </div>
             <div id="enemReviewDayPanel">
                 <h2 id="selectedDayTitle">Selecione um dia no calendário</h2>
@@ -482,48 +424,15 @@
                         </div>
                         <input type="hidden" id="questaoTipoValorInput" value="Objetiva"> 
                     </div>
-                    <div class="form-group">
-                        <label for="questaoTexto">Questão</label>
-                        <textarea id="questaoTexto" placeholder="Texto da questão..."></textarea>
-                        <div class="image-upload-controls">
-                            <button type="button" class="image-upload-btn" onclick="document.getElementById('imagemQuestaoInput').click();">Adicionar Imagem</button>
-                        </div>
-                        <input type="file" id="imagemQuestaoInput" accept="image/*" style="display: none;">
-                        <div id="imagemQuestaoPreviewContainer" class="image-preview-container">
-                            <img id="imagemQuestaoPreview" src="" alt="Preview da Imagem" class="image-preview">
-                            <button type="button" class="remove-image-btn" id="removeImagemQuestaoBtn">&times;</button>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="questaoResposta">Resposta</label>
-                        <textarea id="questaoResposta" placeholder="Resposta..."></textarea>
-                        <div class="image-upload-controls">
-                            <button type="button" class="image-upload-btn" onclick="document.getElementById('imagemRespostaInput').click();">Adicionar Imagem</button>
-                        </div>
-                        <input type="file" id="imagemRespostaInput" accept="image/*" style="display: none;">
-                        <div id="imagemRespostaPreviewContainer" class="image-preview-container">
-                            <img id="imagemRespostaPreview" src="" alt="Preview da Imagem" class="image-preview">
-                            <button type="button" class="remove-image-btn" id="removeImagemRespostaBtn">&times;</button>
-                        </div>
-                    </div>
+                    <div class="form-group"><label for="questaoTexto">Questão</label><textarea id="questaoTexto" required placeholder="Texto da questão..."></textarea></div>
+                    <div class="form-group"><label for="questaoResposta">Resposta</label><textarea id="questaoResposta" required placeholder="Resposta..."></textarea></div>
                     <div class="form-group">
                         <label>Resolução</label>
                         <div class="clickable-cell-group" id="solutionTypeGroup">
                             <div class="clickable-cell" data-value="text">Texto</div> <div class="clickable-cell" data-value="video">Vídeo</div>
                         </div>
                         <input type="hidden" id="solutionTypeValorInput" value="text"> 
-                        <div id="textSolution" class="solution-input">
-                            <textarea id="solutionText" placeholder="Resolução em texto..."></textarea>
-                            <div class="image-upload-controls">
-                                <button type="button" class="image-upload-btn" onclick="document.getElementById('imagemResolucaoInput').click();">Adicionar Imagem</button>
-                            </div>
-                            <input type="file" id="imagemResolucaoInput" accept="image/*" style="display: none;">
-                            <div id="imagemResolucaoPreviewContainer" class="image-preview-container">
-                                <img id="imagemResolucaoPreview" src="" alt="Preview da Imagem" class="image-preview">
-                                <button type="button" class="remove-image-btn" id="removeImagemResolucaoBtn">&times;</button>
-                            </div>
-                        </div>
+                        <div id="textSolution" class="solution-input"><textarea id="solutionText" placeholder="Resolução em texto..."></textarea></div>
                         <div id="videoSolution" class="solution-input"><input type="text" id="solutionVideoLink" placeholder="Link do vídeo..."></div>
                     </div>
                     <div class="extra-videos">
@@ -547,17 +456,9 @@
                     <div><strong>Matéria:</strong> <span id="viewMateria"></span></div> <div><strong>Tipo:</strong> <span id="viewTipo"></span></div>
                     <div><strong>Assunto:</strong> <span id="viewAssunto"></span></div>
                 </div>
-                <h3>Enunciado</h3>
-                <div class="questao-text-content" id="viewQuestaoTexto"></div>
-                <div class="answer-section">
-                    <button class="show-answer" id="showAnswerBtn">Ver Resposta</button>
-                    <div class="answer" id="viewResposta"></div>
-                </div>
-                <div class="solution-section" id="solutionSection">
-                    <h3>Resolução</h3>
-                    <div id="viewSolutionText" class="solution-text"></div>
-                    <iframe id="viewSolutionVideo" class="solution-video" style="display: none;" allowfullscreen></iframe>
-                </div>
+                <h3>Enunciado</h3><div class="questao-text-content" id="viewQuestaoTexto"></div>
+                <div class="answer-section"><button class="show-answer" id="showAnswerBtn">Ver Resposta</button><div class="answer" id="viewResposta"></div></div>
+                <div class="solution-section" id="solutionSection"><h3>Resolução</h3><div id="viewSolutionText" class="solution-text"></div><iframe id="viewSolutionVideo" class="solution-video" style="display: none;" allowfullscreen></iframe></div>
                 <div class="extra-videos-section" id="extraVideosSection" style="display: none;"><h3>Vídeos Extras</h3><div id="viewExtraVideos"></div></div>
                 <div class="comentarios-container"><h3>Comentários</h3><textarea class="comentarios-textarea" id="viewComentarios" placeholder="Suas anotações..."></textarea><button class="save-comentarios-btn" id="saveComentariosBtn"><i class="fas fa-save btn-icon"></i> Salvar</button></div>
             </div>
@@ -568,7 +469,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
 
     <script>
         // ######### INÍCIO DA SEÇÃO DE CONFIGURAÇÃO DO FIREBASE #########
@@ -576,7 +476,7 @@
             apiKey: "AIzaSyD6msk2NG3gfyPKhjZJ4HB1X6SJ8ICzSMg",
             authDomain: "painel-de-controle-para-o-enem.firebaseapp.com",
             projectId: "painel-de-controle-para-o-enem",
-            storageBucket: "painel-de-controle-para-o-enem.appspot.com",
+            storageBucket: "painel-de-controle-para-o-enem.firebasestorage.app",
             messagingSenderId: "144604369875",
             appId: "1:144604369875:web:c113d74ba1b0ddd1629526",
             measurementId: "G-W7PM1J1FNN"
@@ -588,20 +488,15 @@
         }
         const auth = firebase.auth();
         const db = firebase.firestore();
-        const storage = firebase.storage();
         let currentUserUID = null; 
         
         let questoes = []; 
         let editingQuestaoId = null;
         let currentViewingQuestaoId = null; 
-        let currentGeneratedSchedule = {};
+        let currentGeneratedSchedule = {}; // Armazena o cronograma gerado atualmente
         let currentCalendarDate = new Date(2025, 9, 1); 
         let selectedReviewDate = null;
         
-        let imagemQuestaoFile = null;
-        let imagemRespostaFile = null;
-        let imagemResolucaoFile = null;
-
         const addQuestaoBtn = document.getElementById('addQuestaoBtn');
         const addQuestaoModal = document.getElementById('addQuestaoModal');
         const closeModalBtn = document.getElementById('closeAddQuestaoModal'); 
@@ -649,6 +544,7 @@
         const enemReviewDayPanel = document.getElementById('enemReviewDayPanel');
         const reviewQuestionsGrid = document.getElementById('reviewQuestionsGrid');
         const selectedDayTitle = document.getElementById('selectedDayTitle');
+        // const regenerateScheduleBtn = document.getElementById('regenerateScheduleBtn'); // Removido/Comentado
 
 
         const dataEnemDia1 = new Date(2025, 10, 9); 
@@ -677,40 +573,6 @@
             'Língua Estrangeira':{ principal: '#9b59b6', clara: '#ebdef0' }, 
             'default':          { principal: 'var(--primary-dark)', clara: 'rgba(255, 77, 141, 0.05)' } 
         };
-
-        function handleImageSelection(event, previewEl, previewContainerEl, fileVarSetter) {
-            const file = event.target.files[0];
-            if (file) {
-                fileVarSetter(file);
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    previewEl.src = e.target.result;
-                    previewContainerEl.style.display = 'block';
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function resetImageField(inputEl, previewContainerEl, fileVarSetter, urlFieldId = null) {
-            inputEl.value = '';
-            previewContainerEl.style.display = 'none';
-            previewContainerEl.querySelector('.image-preview').src = '';
-            fileVarSetter(null);
-
-            if (urlFieldId) {
-                previewContainerEl.dataset.removeOnSubmit = "true";
-            } else {
-                 delete previewContainerEl.dataset.removeOnSubmit;
-            }
-        }
-        
-        document.getElementById('imagemQuestaoInput').addEventListener('change', (e) => handleImageSelection(e, document.getElementById('imagemQuestaoPreview'), document.getElementById('imagemQuestaoPreviewContainer'), (file) => { imagemQuestaoFile = file; }));
-        document.getElementById('imagemRespostaInput').addEventListener('change', (e) => handleImageSelection(e, document.getElementById('imagemRespostaPreview'), document.getElementById('imagemRespostaPreviewContainer'), (file) => { imagemRespostaFile = file; }));
-        document.getElementById('imagemResolucaoInput').addEventListener('change', (e) => handleImageSelection(e, document.getElementById('imagemResolucaoPreview'), document.getElementById('imagemResolucaoPreviewContainer'), (file) => { imagemResolucaoFile = file; }));
-        
-        document.getElementById('removeImagemQuestaoBtn').addEventListener('click', () => resetImageField(document.getElementById('imagemQuestaoInput'), document.getElementById('imagemQuestaoPreviewContainer'), (file) => { imagemQuestaoFile = file; }, 'imagemQuestaoURL'));
-        document.getElementById('removeImagemRespostaBtn').addEventListener('click', () => resetImageField(document.getElementById('imagemRespostaInput'), document.getElementById('imagemRespostaPreviewContainer'), (file) => { imagemRespostaFile = file; }, 'imagemRespostaURL'));
-        document.getElementById('removeImagemResolucaoBtn').addEventListener('click', () => resetImageField(document.getElementById('imagemResolucaoInput'), document.getElementById('imagemResolucaoPreviewContainer'), (file) => { imagemResolucaoFile = file; }, 'imagemResolucaoURL'));
 
         function setupClickableCellGroup(groupId, hiddenInputId, defaultValue, onSelectCallback) {
             const groupEl = document.getElementById(groupId); 
@@ -751,11 +613,6 @@
             if(modalTitle) modalTitle.textContent = 'Adicionar Questão';
             if(submitBtn) submitBtn.innerHTML = '<i class="fas fa-save btn-icon"></i> Salvar Questão'; 
             if (questaoForm) questaoForm.reset(); 
-            resetImageField(document.getElementById('imagemQuestaoInput'), document.getElementById('imagemQuestaoPreviewContainer'), (file) => { imagemQuestaoFile = file; });
-            resetImageField(document.getElementById('imagemRespostaInput'), document.getElementById('imagemRespostaPreviewContainer'), (file) => { imagemRespostaFile = file; });
-            resetImageField(document.getElementById('imagemResolucaoInput'), document.getElementById('imagemResolucaoPreviewContainer'), (file) => { imagemResolucaoFile = file; });
-            document.querySelectorAll('[data-remove-on-submit]').forEach(el => delete el.dataset.removeOnSubmit);
-
             if (questaoTipoCellGroupControl) questaoTipoCellGroupControl.setActiveCell('Objetiva');
             if (solutionTypeCellGroupControl) solutionTypeCellGroupControl.setActiveCell('text'); 
             if (videoToggle) videoToggle.classList.remove('active'); 
@@ -805,33 +662,12 @@
             }
         });
 
-        async function uploadImageAndGetURL(file, questaoId, fieldName) {
-            if (!file) return null;
-            
-            const filePath = `users/${currentUserUID}/questoes/${questaoId}/${fieldName}_${Date.now()}_${file.name}`;
-            const storageRef = storage.ref(filePath);
-            
-            try {
-                const snapshot = await storageRef.put(file);
-                const downloadURL = await snapshot.ref.getDownloadURL();
-                return downloadURL;
-            } catch (error) {
-                console.error(`Erro no upload da imagem para ${fieldName}:`, error);
-                throw error;
-            }
-        }
-
         if(questaoForm) questaoForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!currentUserUID) {
                 alert("Você precisa estar logado para salvar questões!");
                 return;
             }
-
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin btn-icon"></i> Salvando...';
-
-
             const materiaValue = document.getElementById('questaoMateria').value;
             const assuntoValue = document.getElementById('questaoAssunto').value;
             const tipoValue = questaoTipoValorInput.value; 
@@ -846,78 +682,74 @@
                 document.getElementById('extraVideo3').value
             ].filter(Boolean); 
 
-            if (!materiaValue || !assuntoValue) {
-                 alert('Preencha Matéria e Assunto!');
-                 submitBtn.disabled = false; submitBtn.innerHTML = '<i class="fas fa-save btn-icon"></i> Salvar';
-                 return;
-            }
-
-            if (!textoValue.trim() && !imagemQuestaoFile && !document.getElementById('imagemQuestaoPreview').src) {
-                alert('A questão deve ter um texto ou uma imagem.');
-                submitBtn.disabled = false; submitBtn.innerHTML = '<i class="fas fa-save btn-icon"></i> Salvar';
+            if (!materiaValue || !assuntoValue || !textoValue || !respostaValue ) {
+                 alert('Preencha Matéria, Assunto, Questão e Resposta!');
                 return;
             }
-            if (!respostaValue.trim() && !imagemRespostaFile && !document.getElementById('imagemRespostaPreview').src) {
-                alert('A resposta deve ter um texto ou uma imagem.');
-                submitBtn.disabled = false; submitBtn.innerHTML = '<i class="fas fa-save btn-icon"></i> Salvar';
+            if (solutionTypeValue === 'text' && !solucaoTextoValor.trim() && solutionTypeValue !== 'video') {
+                alert('Preencha a resolução em texto ou mude para vídeo.');
+                return;
+            }
+             if (solutionTypeValue === 'video' && !solucaoVideoValor.trim() && solutionTypeValue !== 'text') {
+                alert('Preencha o link do vídeo da resolução ou mude para texto.');
                 return;
             }
             
+            const questaoData = {
+                materia: materiaValue, assunto: assuntoValue, tipo: tipoValue, texto: textoValue, resposta: respostaValue, 
+                solucaoTexto: solucaoTextoValor, 
+                solucaoVideo: solucaoVideoValor, 
+                videosExtras: videosExtrasArr,
+                ownerUID: currentUserUID,
+                revisoes: {} 
+            };
+
+            if (editingQuestaoId) {
+                const questaoExistente = questoes.find(q => q.id === editingQuestaoId);
+                questaoData.comentarios = questaoExistente?.comentarios || '';
+                questaoData.revisoes = questaoExistente?.revisoes || {};
+                questaoData.lastModifiedTimestamp = firebase.firestore.FieldValue.serverTimestamp();
+                if (questaoExistente?.addedTimestamp) { 
+                    questaoData.addedTimestamp = questaoExistente.addedTimestamp; // Manter o original
+                } else { 
+                    questaoData.addedTimestamp = firebase.firestore.FieldValue.serverTimestamp(); // Se não existir, cria um
+                }
+            } else {
+                questaoData.comentarios = '';
+                questaoData.addedTimestamp = firebase.firestore.FieldValue.serverTimestamp();
+                questaoData.lastModifiedTimestamp = firebase.firestore.FieldValue.serverTimestamp();
+            }
+
             try {
                 const userQuestoesCollection = db.collection("users").doc(currentUserUID).collection("questoes");
-                
-                const questaoDocRef = editingQuestaoId ? userQuestoesCollection.doc(editingQuestaoId) : userQuestoesCollection.doc();
-                const questaoIdParaUpload = questaoDocRef.id;
-                
-                const questaoExistente = editingQuestaoId ? questoes.find(q => q.id === editingQuestaoId) : null;
-
-                let imagemQuestaoURL = questaoExistente?.imagemQuestaoURL || null;
-                if (imagemQuestaoFile) {
-                    imagemQuestaoURL = await uploadImageAndGetURL(imagemQuestaoFile, questaoIdParaUpload, 'questao');
-                } else if (document.getElementById('imagemQuestaoPreviewContainer').dataset.removeOnSubmit === "true") {
-                    imagemQuestaoURL = null;
-                }
-
-                let imagemRespostaURL = questaoExistente?.imagemRespostaURL || null;
-                if (imagemRespostaFile) {
-                    imagemRespostaURL = await uploadImageAndGetURL(imagemRespostaFile, questaoIdParaUpload, 'resposta');
-                } else if (document.getElementById('imagemRespostaPreviewContainer').dataset.removeOnSubmit === "true") {
-                    imagemRespostaURL = null;
-                }
-
-                let imagemResolucaoURL = questaoExistente?.imagemResolucaoURL || null;
-                if (imagemResolucaoFile) {
-                    imagemResolucaoURL = await uploadImageAndGetURL(imagemResolucaoFile, questaoIdParaUpload, 'resolucao');
-                } else if (document.getElementById('imagemResolucaoPreviewContainer').dataset.removeOnSubmit === "true") {
-                    imagemResolucaoURL = null;
-                }
-
-                const questaoData = {
-                    materia: materiaValue, assunto: assuntoValue, tipo: tipoValue, texto: textoValue, resposta: respostaValue, 
-                    solucaoTexto: solucaoTextoValor, solucaoVideo: solucaoVideoValor, 
-                    videosExtras: videosExtrasArr,
-                    ownerUID: currentUserUID,
-                    revisoes: questaoExistente?.revisoes || {},
-                    comentarios: questaoExistente?.comentarios || '',
-                    imagemQuestaoURL: imagemQuestaoURL,
-                    imagemRespostaURL: imagemRespostaURL,
-                    imagemResolucaoURL: imagemResolucaoURL,
-                };
-                
                 if (editingQuestaoId) {
-                    questaoData.lastModifiedTimestamp = firebase.firestore.FieldValue.serverTimestamp();
-                    questaoData.addedTimestamp = questaoExistente.addedTimestamp;
+                    await userQuestoesCollection.doc(editingQuestaoId).set(questaoData, {merge: true}); 
+                    // Atualiza o objeto local
+                    const index = questoes.findIndex(q => q.id === editingQuestaoId);
+                    if (index !== -1) {
+                        questoes[index] = {
+                            ...questoes[index], // Mantém propriedades que não foram explicitamente setadas (como ID)
+                            ...questaoData, // Sobrescreve com os novos dados
+                            // Converte Timestamps para Date para consistência local
+                            addedTimestamp: questaoData.addedTimestamp?.toDate ? questaoData.addedTimestamp.toDate() : new Date(),
+                            lastModifiedTimestamp: new Date() // Assume que a modificação foi agora para a UI
+                        };
+                    }
+                    showSaveMessage('Questão atualizada com sucesso!');
                 } else {
-                    questaoData.addedTimestamp = firebase.firestore.FieldValue.serverTimestamp();
-                    questaoData.lastModifiedTimestamp = firebase.firestore.FieldValue.serverTimestamp();
+                    const docRef = await userQuestoesCollection.add(questaoData);
+                    const newQuestaoForUI = { 
+                        ...questaoData, 
+                        id: docRef.id, 
+                        addedTimestamp: new Date(), 
+                        lastModifiedTimestamp: new Date()
+                    }; 
+                    questoes.push(newQuestaoForUI); // Adiciona no final, a ordenação cuidará do resto
+                    showSaveMessage('Questão salva com sucesso!');
                 }
-
-                await questaoDocRef.set(questaoData, { merge: true });
-
-                showSaveMessage(editingQuestaoId ? 'Questão atualizada com sucesso!' : 'Questão salva com sucesso!');
                 
-                await loadQuestoesFromFirestore(); 
-                currentGeneratedSchedule = generateSequentialReviewSchedule(); 
+                await loadQuestoesFromFirestore(); // Recarrega todas as questões para garantir a ordem correta
+                currentGeneratedSchedule = generateSequentialReviewSchedule(); // Regera o cronograma com a lista atualizada
                 
                 renderQuestoes(); 
                 updateActiveTabContent(); 
@@ -929,13 +761,10 @@
                 if(videoLinks) videoLinks.classList.remove('show');
 
             } catch (error) {
-                console.error("Erro ao salvar questão:", error);
+                console.error("Erro ao salvar questão no Firestore:", error);
                 showSaveMessage("Erro ao salvar a questão.", "error");
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-save btn-icon"></i> Salvar';
-                editingQuestaoId = null; 
             }
+            editingQuestaoId = null; 
         });
 
         function viewQuestao(id) {
@@ -946,36 +775,20 @@
             if(viewMateriaDisplay) viewMateriaDisplay.textContent = q.materia; 
             if(viewTipoDisplay) viewTipoDisplay.textContent = q.tipo; 
             if(viewAssuntoDisplay) viewAssuntoDisplay.textContent = q.assunto;
-            
-            viewQuestaoTextoDisplay.innerHTML = '';
-            if (q.texto) viewQuestaoTextoDisplay.innerHTML += q.texto.replace(/\n/g, '<br>');
-            if (q.imagemQuestaoURL) viewQuestaoTextoDisplay.innerHTML += `<img src="${q.imagemQuestaoURL}" class="view-image" alt="Imagem da Questão">`;
-
-            viewRespostaDisplay.innerHTML = '';
-            if (q.resposta) viewRespostaDisplay.innerHTML += q.resposta.replace(/\n/g, '<br>');
-            if (q.imagemRespostaURL) viewRespostaDisplay.innerHTML += `<img src="${q.imagemRespostaURL}" class="view-image" alt="Imagem da Resposta">`;
-
+            if(viewQuestaoTextoDisplay) viewQuestaoTextoDisplay.innerHTML = q.texto ? q.texto.replace(/\n/g, '<br>') : 'Não disponível';
+            if(viewRespostaDisplay) viewRespostaDisplay.innerHTML = q.resposta ? q.resposta.replace(/\n/g, '<br>') : 'Não disponível';
             if(viewRespostaDisplay) viewRespostaDisplay.classList.remove('show'); 
             if(showAnswerBtnEl) showAnswerBtnEl.textContent = 'Ver Resposta';
-            
             if(solutionSectionEl) solutionSectionEl.style.display = 'none'; 
             if(viewSolutionTextDisplay) viewSolutionTextDisplay.style.display = 'none';
             if(viewSolutionVideoEl) { viewSolutionVideoEl.style.display = 'none';  viewSolutionVideoEl.src = ''; }
-            
-            const hasSolucaoTexto = q.solucaoTexto || q.imagemResolucaoURL;
-            const hasSolucaoVideo = q.solucaoVideo;
-
-            if (hasSolucaoTexto) {
-                viewSolutionTextDisplay.innerHTML = '';
-                if(q.solucaoTexto) viewSolutionTextDisplay.innerHTML += q.solucaoTexto.replace(/\n/g, '<br>');
-                if(q.imagemResolucaoURL) viewSolutionTextDisplay.innerHTML += `<img src="${q.imagemResolucaoURL}" class="view-image" alt="Imagem da Resolução">`;
-                viewSolutionTextDisplay.style.display = 'block';
-                solutionSectionEl.style.display = 'block';
-            } else if (hasSolucaoVideo) {
+            if (q.solucaoTexto) {
+                if(viewSolutionTextDisplay) { viewSolutionTextDisplay.innerHTML = q.solucaoTexto.replace(/\n/g, '<br>'); viewSolutionTextDisplay.style.display = 'block'; }
+                if(solutionSectionEl) solutionSectionEl.style.display = 'block';
+            } else if (q.solucaoVideo) {
                 if(viewSolutionVideoEl) { viewSolutionVideoEl.src = embedVideoLink(q.solucaoVideo); viewSolutionVideoEl.style.display = 'block'; }
                 if(solutionSectionEl) solutionSectionEl.style.display = 'block';
             }
-
             if(extraVideosSectionEl) extraVideosSectionEl.style.display = 'none';
             if (q.videosExtras && q.videosExtras.some(v => v)) {
                 if(viewExtraVideosDisplay) viewExtraVideosDisplay.innerHTML = q.videosExtras.map((video, idx) => 
@@ -1003,12 +816,6 @@
             const q = questoes.find(item => item.id === id); 
             if (!q) return;
             editingQuestaoId = id; 
-            
-            resetImageField(document.getElementById('imagemQuestaoInput'), document.getElementById('imagemQuestaoPreviewContainer'), (file) => { imagemQuestaoFile = file; });
-            resetImageField(document.getElementById('imagemRespostaInput'), document.getElementById('imagemRespostaPreviewContainer'), (file) => { imagemRespostaFile = file; });
-            resetImageField(document.getElementById('imagemResolucaoInput'), document.getElementById('imagemResolucaoPreviewContainer'), (file) => { imagemResolucaoFile = file; });
-            document.querySelectorAll('[data-remove-on-submit]').forEach(el => delete el.dataset.removeOnSubmit);
-
             if(modalTitle) modalTitle.textContent = 'Editar Questão';
             if(submitBtn) submitBtn.innerHTML = '<i class="fas fa-save btn-icon"></i> Salvar Alterações';
             document.getElementById('questaoMateria').value = q.materia; 
@@ -1016,25 +823,10 @@
             document.getElementById('questaoTexto').value = q.texto; 
             document.getElementById('questaoResposta').value = q.resposta;
             if(questaoIdInput) questaoIdInput.value = q.id; 
-            
-            if (q.imagemQuestaoURL) {
-                document.getElementById('imagemQuestaoPreview').src = q.imagemQuestaoURL;
-                document.getElementById('imagemQuestaoPreviewContainer').style.display = 'block';
-            }
-            if (q.imagemRespostaURL) {
-                document.getElementById('imagemRespostaPreview').src = q.imagemRespostaURL;
-                document.getElementById('imagemRespostaPreviewContainer').style.display = 'block';
-            }
-            if (q.imagemResolucaoURL) {
-                document.getElementById('imagemResolucaoPreview').src = q.imagemResolucaoURL;
-                document.getElementById('imagemResolucaoPreviewContainer').style.display = 'block';
-            }
-
-
             if (questaoTipoCellGroupControl) questaoTipoCellGroupControl.setActiveCell(q.tipo);
             const solTextEl = document.getElementById('solutionText');
             const solVideoEl = document.getElementById('solutionVideoLink');
-            if (q.solucaoTexto || q.imagemResolucaoURL) {
+            if (q.solucaoTexto) {
                 if (solutionTypeCellGroupControl) solutionTypeCellGroupControl.setActiveCell('text');
                 if(solTextEl) solTextEl.value = q.solucaoTexto; 
                 if(solVideoEl) solVideoEl.value = '';
@@ -1065,12 +857,12 @@
             if (confirm('Excluir esta questão permanentemente? Isso também removerá a questão de todos os cronogramas de revisão.')) {
                 try {
                     await db.collection("users").doc(currentUserUID).collection("questoes").doc(id).delete();
-                    questoes = questoes.filter(q => q.id !== id);
+                    questoes = questoes.filter(q => q.id !== id); // Remove da lista local
                     
                     showSaveMessage('Questão excluída!');
-                    currentGeneratedSchedule = generateSequentialReviewSchedule();
-                    renderQuestoes();
-                    updateActiveTabContent();
+                    currentGeneratedSchedule = generateSequentialReviewSchedule(); // Regera o cronograma com a lista atualizada
+                    renderQuestoes(); // Re-renderiza a lista de questões (Todas as Questões)
+                    updateActiveTabContent(); // Atualiza a visualização da aba atual (Revisão ENEM se estiver ativa)
                 } catch (error) {
                     console.error("Erro ao excluir questão:", error);
                     showSaveMessage("Erro ao excluir a questão.", "error");
@@ -1104,7 +896,7 @@
             const sortedArr = [...arr].sort((a, b) => {
                 const timeA = a.addedTimestamp instanceof Date ? a.addedTimestamp.getTime() : (typeof a.addedTimestamp === 'number' ? a.addedTimestamp : 0);
                 const timeB = b.addedTimestamp instanceof Date ? b.addedTimestamp.getTime() : (typeof b.addedTimestamp === 'number' ? b.addedTimestamp : 0);
-                return timeA - timeB;
+                return timeA - timeB; // Mais antigo primeiro (ordem de adição)
             });
 
             if(questoesContainer) questoesContainer.innerHTML = ''; 
@@ -1119,6 +911,7 @@
                 if(questoesContainer) questoesContainer.innerHTML = `<div class="empty-state"><i class="fas fa-question-circle"></i><h3>Nenhuma questão cadastrada</h3><p>Você ainda não adicionou nenhuma questão. Clique no botão "+" abaixo para começar!</p></div>`;
                 return;
             }
+            // Inverte para mostrar mais recente primeiro na lista "Todas as Questões"
             const displayOrderArr = [...sortedArr].reverse();
 
             displayOrderArr.forEach(q => {
@@ -1145,24 +938,247 @@
             });
         }
         
-        function generateSequentialReviewSchedule() { if (!currentUserUID) return {}; let combinedSchedule = {}; const periods = [ { enemDate: dataEnemDia1, subjects: materiasRevisaoDia1, periodName: 'Dia1' }, { enemDate: dataEnemDia2, subjects: materiasRevisaoDia2, periodName: 'Dia2' } ]; const REVIEW_DAYS_COUNT = 14; const allSortedQuestoes = [...questoes].sort((a, b) => { const timeA = a.addedTimestamp instanceof Date ? a.addedTimestamp.getTime() : (typeof a.addedTimestamp === 'number' ? a.addedTimestamp : 0); const timeB = b.addedTimestamp instanceof Date ? b.addedTimestamp.getTime() : (typeof b.addedTimestamp === 'number' ? b.addedTimestamp : 0); return timeA - timeB; }); periods.forEach(period => { const relevantSortedQuestoes = allSortedQuestoes.filter(q => period.subjects.includes(q.materia)); const reviewDatesForPeriod = []; for (let i = REVIEW_DAYS_COUNT - 1; i >= 0; i--) { const date = new Date(period.enemDate); date.setDate(period.enemDate.getDate() - (i + 1)); const dateStr = date.toISOString().split('T')[0]; if (dateStr !== enemDay1Str && dateStr !== enemDay2Str) { if (!((period.periodName === 'Dia1' && dateStr === enemDay2Str) || (period.periodName === 'Dia2' && dateStr === enemDay1Str))) { reviewDatesForPeriod.push(dateStr); } } } reviewDatesForPeriod.sort(); if (relevantSortedQuestoes.length > 0 && reviewDatesForPeriod.length > 0) { relevantSortedQuestoes.forEach((question, index) => { const targetDayIndex = index % reviewDatesForPeriod.length; const dateKey = reviewDatesForPeriod[targetDayIndex]; if (!combinedSchedule[dateKey]) combinedSchedule[dateKey] = []; if (!combinedSchedule[dateKey].includes(question.id)) { combinedSchedule[dateKey].push(question.id); } }); } }); console.log("Cronograma Gerado Sequencialmente:", combinedSchedule); currentGeneratedSchedule = combinedSchedule; return combinedSchedule; }
-        function renderCalendar(year, month, scheduleToRender) { if(!currentMonthYearDisplay || !enemCalendarGrid) return; currentMonthYearDisplay.textContent = `${new Date(year, month).toLocaleString('pt-BR', { month: 'long' })} ${year}`; enemCalendarGrid.innerHTML = ''; const daysOfWeek = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']; daysOfWeek.forEach(day => enemCalendarGrid.insertAdjacentHTML('beforeend', `<div class="calendar-header-cell">${day}</div>`)); const firstDayOfMonth = new Date(year, month, 1).getDay(); const daysInMonth = new Date(year, month + 1, 0).getDate(); for (let i = 0; i < firstDayOfMonth; i++) { enemCalendarGrid.insertAdjacentHTML('beforeend', '<div class="calendar-day-cell empty"></div>'); } for (let day = 1; day <= daysInMonth; day++) { const dayCell = document.createElement('div'); dayCell.className = 'calendar-day-cell'; const dateKey = new Date(year, month, day).toISOString().split('T')[0]; dayCell.dataset.date = dateKey; const dayNumberSpan = document.createElement('span'); dayNumberSpan.textContent = day; dayCell.appendChild(dayNumberSpan); if (dateKey === enemDay1Str || dateKey === enemDay2Str) { dayCell.classList.add('enem-exam-day'); } else { if (scheduleToRender && scheduleToRender[dateKey] && scheduleToRender[dateKey].length > 0) { dayCell.classList.add('has-review'); dayCell.innerHTML += `<span class="review-q-count">${scheduleToRender[dateKey].length}Q</span>`; } dayCell.addEventListener('click', () => handleDayClick(dateKey, dayCell, scheduleToRender)); } if (selectedReviewDate === dateKey && !dayCell.classList.contains('enem-exam-day')) { dayCell.classList.add('selected'); } enemCalendarGrid.appendChild(dayCell); } if(prevMonthBtn) prevMonthBtn.disabled = (year === 2025 && month === 9); if(nextMonthBtn) nextMonthBtn.disabled = (year === 2025 && month === 10); }
-        function handleDayClick(dateKey, cellElement, scheduleForDayClick) { if(!selectedDayTitle || !reviewQuestionsGrid) return; if (cellElement && cellElement.classList.contains('enem-exam-day')) { selectedReviewDate = dateKey; document.querySelectorAll('.calendar-day-cell.selected').forEach(c => c.classList.remove('selected')); if(cellElement) cellElement.classList.add('selected'); selectedDayTitle.textContent = `Dia da Prova do ENEM!`; reviewQuestionsGrid.innerHTML = `<p style="color: var(--text-color); text-align:center; grid-column: 1 / -1;">Boa prova! Nenhuma revisão agendada.</p>`; return; } selectedReviewDate = dateKey; document.querySelectorAll('.calendar-day-cell.selected').forEach(c => c.classList.remove('selected')); if (cellElement) cellElement.classList.add('selected'); const dateObj = new Date(dateKey + 'T00:00:00Z'); selectedDayTitle.textContent = `Revisão para ${dateObj.toLocaleDateString('pt-BR', {timeZone: 'UTC', weekday: 'long', day:'2-digit', month:'2-digit'})}`; reviewQuestionsGrid.innerHTML = ''; const questionIdsForDay = (scheduleForDayClick && scheduleForDayClick[dateKey]) ? scheduleForDayClick[dateKey] : []; if (questionIdsForDay.length > 0) { questionIdsForDay.forEach(qId => { const questao = questoes.find(q => q.id === qId); if (questao) { const card = document.createElement('div'); card.className = 'review-questao-card'; const isChecked = (questao.revisoes && questao.revisoes[dateKey] === true); card.innerHTML = ` <p><strong>${questao.materia}</strong></p> <p>${(questao.assunto || '').substring(0,50)}${(questao.assunto || '').length > 50 ? '...' : ''}</p> <p style="font-size:0.7em; color:#888;">ID: ${qId}</p> <div class="actions"> <button class="view-btn view-btn-revisao" onclick="viewQuestao('${questao.id}')"><i class="fas fa-eye"></i> Ver</button> <div class="checkbox-group"> <input type="checkbox" id="rev_${dateKey}_${qId}" data-date="${dateKey}" data-qid="${qId}" ${isChecked ? 'checked' : ''}> <label for="rev_${dateKey}_${qId}">Revisada</label> </div> </div>`; reviewQuestionsGrid.appendChild(card); const checkbox = card.querySelector(`input[type="checkbox"]`); if (checkbox) checkbox.addEventListener('change', handleRevisadaChange); } }); } else { reviewQuestionsGrid.innerHTML = `<p style="color: var(--text-color); text-align:center; grid-column: 1 / -1;">Nenhuma questão agendada para este dia.</p>`; } }
-        async function handleRevisadaChange(event) { if (!currentUserUID) { event.target.checked = !event.target.checked; alert("Você precisa estar logado para salvar o status da revisão."); return; } const dateKey = event.target.dataset.date; const qid = event.target.dataset.qid; const isChecked = event.target.checked; try { const questaoRef = db.collection("users").doc(currentUserUID).collection("questoes").doc(qid); await questaoRef.set({ revisoes: { [dateKey]: isChecked } }, { merge: true }); const questaoLocal = questoes.find(q => q.id === qid); if (questaoLocal) { if (!questaoLocal.revisoes) questaoLocal.revisoes = {}; questaoLocal.revisoes[dateKey] = isChecked; } } catch (error) { console.error("Erro ao salvar status de revisão no Firestore:", error); event.target.checked = !event.target.checked; alert("Erro ao salvar o status da revisão. Tente novamente."); } }
-        if(prevMonthBtn) prevMonthBtn.addEventListener('click', () => { currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1); renderCalendar(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), currentGeneratedSchedule); clearDayPanel(); });
-        if(nextMonthBtn) nextMonthBtn.addEventListener('click', () => { currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1); renderCalendar(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), currentGeneratedSchedule); clearDayPanel(); });
-        function clearDayPanel() { if(selectedDayTitle) selectedDayTitle.textContent = "Selecione um dia"; if(reviewQuestionsGrid) reviewQuestionsGrid.innerHTML = ""; selectedReviewDate = null; }
-        function showTab(tabId) { if(todasQuestoesSection) todasQuestoesSection.style.display = (tabId === 'todasQuestoes' ? 'block' : 'none'); if(revisaoEnemSection) revisaoEnemSection.style.display = (tabId === 'revisaoEnem' ? 'flex' : 'none'); if(addQuestaoBtn) addQuestaoBtn.style.display = 'flex'; if(tabButtons) tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId)); if (tabId === 'todasQuestoes') { filterQuestoes(); } else if (tabId === 'revisaoEnem') { currentGeneratedSchedule = generateSequentialReviewSchedule(); renderCalendar(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), currentGeneratedSchedule); clearDayPanel(); } }
+        function generateSequentialReviewSchedule() {
+            if (!currentUserUID) return {};
+
+            let combinedSchedule = {};
+            const periods = [
+                { enemDate: dataEnemDia1, subjects: materiasRevisaoDia1, periodName: 'Dia1' },
+                { enemDate: dataEnemDia2, subjects: materiasRevisaoDia2, periodName: 'Dia2' }
+            ];
+            const REVIEW_DAYS_COUNT = 14;
+
+            // Ordena a lista principal de questões UMA VEZ pela data de adição
+            const allSortedQuestoes = [...questoes].sort((a, b) => {
+                const timeA = a.addedTimestamp instanceof Date ? a.addedTimestamp.getTime() : (typeof a.addedTimestamp === 'number' ? a.addedTimestamp : 0);
+                const timeB = b.addedTimestamp instanceof Date ? b.addedTimestamp.getTime() : (typeof b.addedTimestamp === 'number' ? b.addedTimestamp : 0);
+                return timeA - timeB; // Mais antigo primeiro
+            });
+
+            periods.forEach(period => {
+                // Filtra as questões relevantes para este período, MANTENDO a ordem original de 'allSortedQuestoes'
+                const relevantSortedQuestoes = allSortedQuestoes.filter(q => period.subjects.includes(q.materia));
+
+                const reviewDatesForPeriod = [];
+                for (let i = REVIEW_DAYS_COUNT - 1; i >= 0; i--) {
+                    const date = new Date(period.enemDate);
+                    date.setDate(period.enemDate.getDate() - (i + 1));
+                    const dateStr = date.toISOString().split('T')[0];
+                    if (dateStr !== enemDay1Str && dateStr !== enemDay2Str) {
+                        if (!((period.periodName === 'Dia1' && dateStr === enemDay2Str) || (period.periodName === 'Dia2' && dateStr === enemDay1Str))) {
+                            reviewDatesForPeriod.push(dateStr); // Salva como string YYYY-MM-DD
+                        }
+                    }
+                }
+                // Ordena as datas de revisão para garantir consistência
+                reviewDatesForPeriod.sort();
+
+
+                if (relevantSortedQuestoes.length > 0 && reviewDatesForPeriod.length > 0) {
+                    relevantSortedQuestoes.forEach((question, index) => {
+                        const targetDayIndex = index % reviewDatesForPeriod.length; // Distribuição cíclica
+                        const dateKey = reviewDatesForPeriod[targetDayIndex];
+                        
+                        if (!combinedSchedule[dateKey]) combinedSchedule[dateKey] = [];
+                        // Adiciona se não estiver lá (embora com a nova lógica, não deve haver duplicatas por período)
+                        if (!combinedSchedule[dateKey].includes(question.id)) {
+                            combinedSchedule[dateKey].push(question.id);
+                        }
+                    });
+                }
+            });
+            
+            console.log("Cronograma Gerado Sequencialmente:", combinedSchedule);
+            currentGeneratedSchedule = combinedSchedule; // Atualiza o cronograma globalmente
+            return combinedSchedule;
+        }
+
+
+        function renderCalendar(year, month, scheduleToRender) { 
+            if(!currentMonthYearDisplay || !enemCalendarGrid) return; 
+            currentMonthYearDisplay.textContent = `${new Date(year, month).toLocaleString('pt-BR', { month: 'long' })} ${year}`;
+            enemCalendarGrid.innerHTML = '';
+            const daysOfWeek = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+            daysOfWeek.forEach(day => enemCalendarGrid.insertAdjacentHTML('beforeend', `<div class="calendar-header-cell">${day}</div>`));
+            const firstDayOfMonth = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            for (let i = 0; i < firstDayOfMonth; i++) {
+                enemCalendarGrid.insertAdjacentHTML('beforeend', '<div class="calendar-day-cell empty"></div>');
+            }
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayCell = document.createElement('div'); 
+                dayCell.className = 'calendar-day-cell';
+                const dateKey = new Date(year, month, day).toISOString().split('T')[0];
+                dayCell.dataset.date = dateKey;
+                const dayNumberSpan = document.createElement('span'); 
+                dayNumberSpan.textContent = day;
+                dayCell.appendChild(dayNumberSpan);
+
+                if (dateKey === enemDay1Str || dateKey === enemDay2Str) {
+                    dayCell.classList.add('enem-exam-day');
+                } else {
+                    // Usa o scheduleToRender passado para determinar se há revisão
+                    if (scheduleToRender && scheduleToRender[dateKey] && scheduleToRender[dateKey].length > 0) { 
+                        dayCell.classList.add('has-review');
+                        dayCell.innerHTML += `<span class="review-q-count">${scheduleToRender[dateKey].length}Q</span>`;
+                    }
+                    dayCell.addEventListener('click', () => handleDayClick(dateKey, dayCell, scheduleToRender)); 
+                }
+                if (selectedReviewDate === dateKey && !dayCell.classList.contains('enem-exam-day')) {
+                     dayCell.classList.add('selected');
+                }
+                enemCalendarGrid.appendChild(dayCell);
+            }
+            if(prevMonthBtn) prevMonthBtn.disabled = (year === 2025 && month === 9); 
+            if(nextMonthBtn) nextMonthBtn.disabled = (year === 2025 && month === 10);
+        }
+        
+        function handleDayClick(dateKey, cellElement, scheduleForDayClick) { 
+            if(!selectedDayTitle || !reviewQuestionsGrid) return;
+            if (cellElement && cellElement.classList.contains('enem-exam-day')) {
+                selectedReviewDate = dateKey;
+                document.querySelectorAll('.calendar-day-cell.selected').forEach(c => c.classList.remove('selected'));
+                if(cellElement) cellElement.classList.add('selected'); 
+                selectedDayTitle.textContent = `Dia da Prova do ENEM!`;
+                reviewQuestionsGrid.innerHTML = `<p style="color: var(--text-color); text-align:center; grid-column: 1 / -1;">Boa prova! Nenhuma revisão agendada.</p>`;
+                return;
+            }
+            selectedReviewDate = dateKey; 
+            document.querySelectorAll('.calendar-day-cell.selected').forEach(c => c.classList.remove('selected'));
+            if (cellElement) cellElement.classList.add('selected');
+            const dateObj = new Date(dateKey + 'T00:00:00Z'); 
+            selectedDayTitle.textContent = `Revisão para ${dateObj.toLocaleDateString('pt-BR', {timeZone: 'UTC', weekday: 'long', day:'2-digit', month:'2-digit'})}`;
+            reviewQuestionsGrid.innerHTML = '';
+            
+            const questionIdsForDay = (scheduleForDayClick && scheduleForDayClick[dateKey]) ? scheduleForDayClick[dateKey] : []; 
+            if (questionIdsForDay.length > 0) {
+                questionIdsForDay.forEach(qId => {
+                    const questao = questoes.find(q => q.id === qId);
+                    if (questao) {
+                        const card = document.createElement('div'); 
+                        card.className = 'review-questao-card';
+                        const isChecked = (questao.revisoes && questao.revisoes[dateKey] === true);
+                        card.innerHTML = `
+                            <p><strong>${questao.materia}</strong></p>
+                            <p>${(questao.assunto || '').substring(0,50)}${(questao.assunto || '').length > 50 ? '...' : ''}</p>
+                            <p style="font-size:0.7em; color:#888;">ID: ${qId}</p>
+                            <div class="actions">
+                                <button class="view-btn view-btn-revisao" onclick="viewQuestao('${questao.id}')"><i class="fas fa-eye"></i> Ver</button>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="rev_${dateKey}_${qId}" data-date="${dateKey}" data-qid="${qId}" ${isChecked ? 'checked' : ''}>
+                                    <label for="rev_${dateKey}_${qId}">Revisada</label>
+                                </div>
+                            </div>`;
+                        reviewQuestionsGrid.appendChild(card);
+                        const checkbox = card.querySelector(`input[type="checkbox"]`);
+                        if (checkbox) checkbox.addEventListener('change', handleRevisadaChange);
+                    }
+                });
+            } else {
+                reviewQuestionsGrid.innerHTML = `<p style="color: var(--text-color); text-align:center; grid-column: 1 / -1;">Nenhuma questão agendada para este dia.</p>`;
+            }
+        }
+
+        async function handleRevisadaChange(event) { 
+            if (!currentUserUID) {
+                event.target.checked = !event.target.checked; 
+                alert("Você precisa estar logado para salvar o status da revisão.");
+                return;
+            }
+            const dateKey = event.target.dataset.date;
+            const qid = event.target.dataset.qid;
+            const isChecked = event.target.checked;
+            try {
+                const questaoRef = db.collection("users").doc(currentUserUID).collection("questoes").doc(qid);
+                await questaoRef.set({ revisoes: { [dateKey]: isChecked } }, { merge: true });
+                const questaoLocal = questoes.find(q => q.id === qid);
+                if (questaoLocal) {
+                    if (!questaoLocal.revisoes) questaoLocal.revisoes = {};
+                    questaoLocal.revisoes[dateKey] = isChecked;
+                }
+            } catch (error) {
+                console.error("Erro ao salvar status de revisão no Firestore:", error);
+                event.target.checked = !event.target.checked; 
+                alert("Erro ao salvar o status da revisão. Tente novamente.");
+            }
+        }
+        
+        if(prevMonthBtn) prevMonthBtn.addEventListener('click', () => { 
+            currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+            renderCalendar(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), currentGeneratedSchedule); 
+            clearDayPanel();
+        });
+        if(nextMonthBtn) nextMonthBtn.addEventListener('click', () => { 
+            currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+            renderCalendar(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), currentGeneratedSchedule); 
+            clearDayPanel();
+        });
+        
+        // O botão "regenerateScheduleBtn" foi removido/comentado no HTML pois a lógica mudou.
+        // Se precisar de um botão para forçar a atualização da UI:
+        /*
+        if (regenerateScheduleBtn) {
+            regenerateScheduleBtn.addEventListener('click', () => {
+                if (!currentUserUID) {
+                    alert("Você precisa estar logado.");
+                    return;
+                }
+                currentGeneratedSchedule = generateSequentialReviewSchedule();
+                renderCalendar(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), currentGeneratedSchedule);
+                clearDayPanel(); 
+                showSaveMessage("Visualização do cronograma atualizada!");
+            });
+        }
+        */
+        
+        function clearDayPanel() { 
+            if(selectedDayTitle) selectedDayTitle.textContent = "Selecione um dia"; 
+            if(reviewQuestionsGrid) reviewQuestionsGrid.innerHTML = ""; 
+            selectedReviewDate = null; 
+        }
+
+        function showTab(tabId) { 
+            if(todasQuestoesSection) todasQuestoesSection.style.display = (tabId === 'todasQuestoes' ? 'block' : 'none');
+            if(revisaoEnemSection) revisaoEnemSection.style.display = (tabId === 'revisaoEnem' ? 'flex' : 'none');
+            if(addQuestaoBtn) addQuestaoBtn.style.display = 'flex'; 
+            if(tabButtons) tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
+            if (tabId === 'todasQuestoes') {
+                filterQuestoes(); 
+            } else if (tabId === 'revisaoEnem') {
+                currentGeneratedSchedule = generateSequentialReviewSchedule(); 
+                renderCalendar(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), currentGeneratedSchedule);
+                clearDayPanel(); 
+            }
+        }
         if(tabButtons) tabButtons.forEach(button => button.addEventListener('click', () => showTab(button.dataset.tab)));
-        function updateActiveTabContent() { const activeTabButton = document.querySelector('.tab-button.active'); if (activeTabButton) { const activeTab = activeTabButton.dataset.tab; if (activeTab === 'revisaoEnem') { currentGeneratedSchedule = generateSequentialReviewSchedule(); renderCalendar(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), currentGeneratedSchedule); } else if (activeTab === 'todasQuestoes') { renderQuestoes(); } } }
-        function initializePageUI() { questaoTipoCellGroupControl = setupClickableCellGroup('questaoTipoGroup', 'questaoTipoValorInput', 'Objetiva'); solutionTypeCellGroupControl = setupClickableCellGroup('solutionTypeGroup', 'solutionTypeValorInput', 'text', toggleSolutionInputs); if(filterMateria) filterMateria.addEventListener('change', filterQuestoes); if(filterTipo) filterTipo.addEventListener('change', filterQuestoes); showTab('todasQuestoes'); }
+
+        function updateActiveTabContent() { 
+            const activeTabButton = document.querySelector('.tab-button.active');
+            if (activeTabButton) {
+                const activeTab = activeTabButton.dataset.tab;
+                if (activeTab === 'revisaoEnem') {
+                    currentGeneratedSchedule = generateSequentialReviewSchedule(); 
+                    renderCalendar(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), currentGeneratedSchedule);
+                } else if (activeTab === 'todasQuestoes') {
+                    renderQuestoes(); 
+                }
+            }
+        }
+        
+        function initializePageUI() {
+            questaoTipoCellGroupControl = setupClickableCellGroup('questaoTipoGroup', 'questaoTipoValorInput', 'Objetiva');
+            solutionTypeCellGroupControl = setupClickableCellGroup('solutionTypeGroup', 'solutionTypeValorInput', 'text', toggleSolutionInputs);
+            if(filterMateria) filterMateria.addEventListener('change', filterQuestoes);
+            if(filterTipo) filterTipo.addEventListener('change', filterQuestoes);
+            showTab('todasQuestoes'); 
+        }
 
         async function loadQuestoesFromFirestore() {
             if (!currentUserUID) {
                 questoes = []; 
                 renderQuestoes(); 
                 if(addQuestaoBtn) addQuestaoBtn.disabled = true;
-                return Promise.resolve();
+                return Promise.resolve(); // Retorna uma promessa resolvida
             }
             if(addQuestaoBtn) addQuestaoBtn.disabled = false; 
             try {
@@ -1172,10 +1188,10 @@
                     const data = doc.data();
                     if (data.addedTimestamp && data.addedTimestamp.toDate) {
                         data.addedTimestamp = data.addedTimestamp.toDate();
-                    } else if (typeof data.addedTimestamp === 'number') {
+                    } else if (typeof data.addedTimestamp === 'number') { // Compatibilidade com dados antigos
                         data.addedTimestamp = new Date(data.addedTimestamp);
                     } else {
-                        data.addedTimestamp = new Date(0);
+                        data.addedTimestamp = new Date(0); // Default para questões sem timestamp
                     }
 
                     if (data.lastModifiedTimestamp && data.lastModifiedTimestamp.toDate) {
@@ -1183,7 +1199,7 @@
                     } else if (typeof data.lastModifiedTimestamp === 'number') {
                          data.lastModifiedTimestamp = new Date(data.lastModifiedTimestamp);
                     } else {
-                        data.lastModifiedTimestamp = data.addedTimestamp;
+                        data.lastModifiedTimestamp = data.addedTimestamp; // Default
                     }
                     return { id: doc.id, ...data };
                 });
@@ -1202,20 +1218,19 @@
                     currentUserUID = user.uid;
                     if (addQuestaoBtn) addQuestaoBtn.disabled = false;
                     await loadQuestoesFromFirestore(); 
-                    currentGeneratedSchedule = generateSequentialReviewSchedule();
+                    currentGeneratedSchedule = generateSequentialReviewSchedule(); // Gera após carregar
                     updateActiveTabContent(); 
                 } else {
                     currentUserUID = null;
                     questoes = []; 
                     renderQuestoes(); 
-                    currentGeneratedSchedule = generateSequentialReviewSchedule();
+                    currentGeneratedSchedule = generateSequentialReviewSchedule(); // Gera com questoes vazias
                     renderCalendar(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), currentGeneratedSchedule);
                     clearDayPanel();
                     if (addQuestaoBtn) addQuestaoBtn.disabled = true; 
                 }
             });
         });
-    </script>
-</body>
-</html>
+    </script></body></html>
+
 
