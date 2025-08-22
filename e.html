@@ -98,7 +98,6 @@
         }
         .form-group textarea { min-height: 120px; resize: vertical; line-height: 1.7; }
         
-        /* <!-- NOVO --> Estilos para Upload de Imagem */
         .image-upload-controls {
             display: flex;
             align-items: center;
@@ -117,7 +116,7 @@
         .image-preview-container {
             margin-top: 15px;
             position: relative;
-            display: none; /* Começa escondido */
+            display: none;
         }
         .image-preview {
             max-width: 100%;
@@ -149,7 +148,7 @@
             justify-content: center;
             align-items: center;
             border-radius: 8px;
-            display: none; /* Começa escondido */
+            display: none;
         }
         .spinner {
             border: 4px solid #f3f3f3;
@@ -163,7 +162,6 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        /* Fim dos estilos de upload */
 
         .clickable-cell-group { display: flex; gap: 10px; margin-top: 10px; }
         .clickable-cell {
@@ -264,7 +262,7 @@
         .close-view-modal { background: none; border: none; font-size: 28px; cursor: pointer; color: var(--text-color); position: absolute; top: 15px; right: 15px; transition: transform 0.2s; }
         .close-view-modal:hover { transform: rotate(90deg); color: var(--primary-dark); }
         .questao-text-content { line-height: 1.8; font-size: 16px; margin-bottom: 25px; padding: 20px; background-color: #fffafc; border-radius: 8px; border-left: 5px solid var(--primary-color); box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        /* <!-- NOVO --> Estilo para a imagem dentro da visualização */
+        
         .view-image {
             max-width: 100%;
             margin-top: 15px;
@@ -378,16 +376,6 @@
         .review-questao-card .checkbox-group label { font-size: 0.9em; margin-left: 5px; cursor: pointer; }
         .review-questao-card input[type="checkbox"] { accent-color: var(--primary-color); cursor: pointer; }
 
-        .regenerate-schedule-btn-container {
-            text-align: center;
-            margin-top: 10px; 
-            margin-bottom: 10px;
-        }
-        .regenerate-schedule-btn { /* Estilo do botão removido, pois o botão foi removido */
-           /* display: none; */ /* Esconde o botão já que não é mais necessário para "regerar aleatoriamente" */
-        }
-
-
         @media (max-width: 1000px) {
             .questoes-container { grid-template-columns: repeat(2, 1fr); }
             #revisaoEnemSection { flex-direction: column; }
@@ -455,10 +443,6 @@
                     <button id="nextMonthBtn">Próximo <i class="fas fa-chevron-right"></i></button>
                 </div>
                 <div id="enemCalendarGrid"></div>
-                 <div class="regenerate-schedule-btn-container">
-                    <!-- Botão removido ou comentado pois sua função original não é mais necessária -->
-                    <!-- <button id="regenerateScheduleBtn" class="regenerate-schedule-btn"><i class="fas fa-sync-alt"></i> Regerar Cronograma</button> -->
-                </div>
             </div>
             <div id="enemReviewDayPanel">
                 <h2 id="selectedDayTitle">Selecione um dia no calendário</h2>
@@ -498,10 +482,9 @@
                         </div>
                         <input type="hidden" id="questaoTipoValorInput" value="Objetiva"> 
                     </div>
-                    <!-- <!-- NOVO --> Bloco de Texto e Imagem da Questão -->
                     <div class="form-group">
                         <label for="questaoTexto">Questão</label>
-                        <textarea id="questaoTexto" placeholder="Texto da questão..."></textarea> <!-- Removido o 'required' daqui -->
+                        <textarea id="questaoTexto" placeholder="Texto da questão..."></textarea>
                         <div class="image-upload-controls">
                             <button type="button" class="image-upload-btn" onclick="document.getElementById('imagemQuestaoInput').click();">Adicionar Imagem</button>
                         </div>
@@ -509,14 +492,12 @@
                         <div id="imagemQuestaoPreviewContainer" class="image-preview-container">
                             <img id="imagemQuestaoPreview" src="" alt="Preview da Imagem" class="image-preview">
                             <button type="button" class="remove-image-btn" id="removeImagemQuestaoBtn">&times;</button>
-                            <div class="spinner-overlay"><div class="spinner"></div></div>
                         </div>
                     </div>
 
-                    <!-- <!-- NOVO --> Bloco de Texto e Imagem da Resposta -->
                     <div class="form-group">
                         <label for="questaoResposta">Resposta</label>
-                        <textarea id="questaoResposta" placeholder="Resposta..."></textarea> <!-- Removido o 'required' daqui -->
+                        <textarea id="questaoResposta" placeholder="Resposta..."></textarea>
                         <div class="image-upload-controls">
                             <button type="button" class="image-upload-btn" onclick="document.getElementById('imagemRespostaInput').click();">Adicionar Imagem</button>
                         </div>
@@ -524,7 +505,6 @@
                         <div id="imagemRespostaPreviewContainer" class="image-preview-container">
                             <img id="imagemRespostaPreview" src="" alt="Preview da Imagem" class="image-preview">
                             <button type="button" class="remove-image-btn" id="removeImagemRespostaBtn">&times;</button>
-                            <div class="spinner-overlay"><div class="spinner"></div></div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -535,7 +515,6 @@
                         <input type="hidden" id="solutionTypeValorInput" value="text"> 
                         <div id="textSolution" class="solution-input">
                             <textarea id="solutionText" placeholder="Resolução em texto..."></textarea>
-                            <!-- <!-- NOVO --> Bloco de Imagem da Resolução em Texto -->
                             <div class="image-upload-controls">
                                 <button type="button" class="image-upload-btn" onclick="document.getElementById('imagemResolucaoInput').click();">Adicionar Imagem</button>
                             </div>
@@ -543,7 +522,6 @@
                             <div id="imagemResolucaoPreviewContainer" class="image-preview-container">
                                 <img id="imagemResolucaoPreview" src="" alt="Preview da Imagem" class="image-preview">
                                 <button type="button" class="remove-image-btn" id="removeImagemResolucaoBtn">&times;</button>
-                                <div class="spinner-overlay"><div class="spinner"></div></div>
                             </div>
                         </div>
                         <div id="videoSolution" class="solution-input"><input type="text" id="solutionVideoLink" placeholder="Link do vídeo..."></div>
@@ -590,7 +568,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script> <!-- NOVO -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
 
     <script>
         // ######### INÍCIO DA SEÇÃO DE CONFIGURAÇÃO DO FIREBASE #########
@@ -598,7 +576,7 @@
             apiKey: "AIzaSyD6msk2NG3gfyPKhjZJ4HB1X6SJ8ICzSMg",
             authDomain: "painel-de-controle-para-o-enem.firebaseapp.com",
             projectId: "painel-de-controle-para-o-enem",
-            storageBucket: "painel-de-controle-para-o-enem.appspot.com", // MODIFICADO: Use o appspot.com
+            storageBucket: "painel-de-controle-para-o-enem.appspot.com",
             messagingSenderId: "144604369875",
             appId: "1:144604369875:web:c113d74ba1b0ddd1629526",
             measurementId: "G-W7PM1J1FNN"
@@ -610,7 +588,7 @@
         }
         const auth = firebase.auth();
         const db = firebase.firestore();
-        const storage = firebase.storage(); // NOVO
+        const storage = firebase.storage();
         let currentUserUID = null; 
         
         let questoes = []; 
@@ -620,7 +598,6 @@
         let currentCalendarDate = new Date(2025, 9, 1); 
         let selectedReviewDate = null;
         
-        // MODIFICADO: Variáveis para guardar os arquivos de imagem selecionados
         let imagemQuestaoFile = null;
         let imagemRespostaFile = null;
         let imagemResolucaoFile = null;
@@ -701,11 +678,10 @@
             'default':          { principal: 'var(--primary-dark)', clara: 'rgba(255, 77, 141, 0.05)' } 
         };
 
-        // NOVO: Função para lidar com a seleção de imagem e mostrar preview
         function handleImageSelection(event, previewEl, previewContainerEl, fileVarSetter) {
             const file = event.target.files[0];
             if (file) {
-                fileVarSetter(file); // Guarda o arquivo para upload posterior
+                fileVarSetter(file);
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     previewEl.src = e.target.result;
@@ -715,14 +691,12 @@
             }
         }
 
-        // NOVO: Função para resetar um campo de imagem
         function resetImageField(inputEl, previewContainerEl, fileVarSetter, urlFieldId = null) {
-            inputEl.value = ''; // Limpa o input
-            previewContainerEl.style.display = 'none'; // Esconde o preview
+            inputEl.value = '';
+            previewContainerEl.style.display = 'none';
             previewContainerEl.querySelector('.image-preview').src = '';
-            fileVarSetter(null); // Limpa a variável do arquivo
+            fileVarSetter(null);
 
-            // NOVO: Marca para remoção no submit
             if (urlFieldId) {
                 previewContainerEl.dataset.removeOnSubmit = "true";
             } else {
@@ -730,12 +704,10 @@
             }
         }
         
-        // NOVO: Adiciona os listeners para os inputs de imagem
         document.getElementById('imagemQuestaoInput').addEventListener('change', (e) => handleImageSelection(e, document.getElementById('imagemQuestaoPreview'), document.getElementById('imagemQuestaoPreviewContainer'), (file) => { imagemQuestaoFile = file; }));
         document.getElementById('imagemRespostaInput').addEventListener('change', (e) => handleImageSelection(e, document.getElementById('imagemRespostaPreview'), document.getElementById('imagemRespostaPreviewContainer'), (file) => { imagemRespostaFile = file; }));
         document.getElementById('imagemResolucaoInput').addEventListener('change', (e) => handleImageSelection(e, document.getElementById('imagemResolucaoPreview'), document.getElementById('imagemResolucaoPreviewContainer'), (file) => { imagemResolucaoFile = file; }));
         
-        // NOVO: Adiciona os listeners para os botões de remover imagem
         document.getElementById('removeImagemQuestaoBtn').addEventListener('click', () => resetImageField(document.getElementById('imagemQuestaoInput'), document.getElementById('imagemQuestaoPreviewContainer'), (file) => { imagemQuestaoFile = file; }, 'imagemQuestaoURL'));
         document.getElementById('removeImagemRespostaBtn').addEventListener('click', () => resetImageField(document.getElementById('imagemRespostaInput'), document.getElementById('imagemRespostaPreviewContainer'), (file) => { imagemRespostaFile = file; }, 'imagemRespostaURL'));
         document.getElementById('removeImagemResolucaoBtn').addEventListener('click', () => resetImageField(document.getElementById('imagemResolucaoInput'), document.getElementById('imagemResolucaoPreviewContainer'), (file) => { imagemResolucaoFile = file; }, 'imagemResolucaoURL'));
@@ -779,7 +751,6 @@
             if(modalTitle) modalTitle.textContent = 'Adicionar Questão';
             if(submitBtn) submitBtn.innerHTML = '<i class="fas fa-save btn-icon"></i> Salvar Questão'; 
             if (questaoForm) questaoForm.reset(); 
-            // MODIFICADO: Resetar campos de imagem ao abrir modal para nova questão
             resetImageField(document.getElementById('imagemQuestaoInput'), document.getElementById('imagemQuestaoPreviewContainer'), (file) => { imagemQuestaoFile = file; });
             resetImageField(document.getElementById('imagemRespostaInput'), document.getElementById('imagemRespostaPreviewContainer'), (file) => { imagemRespostaFile = file; });
             resetImageField(document.getElementById('imagemResolucaoInput'), document.getElementById('imagemResolucaoPreviewContainer'), (file) => { imagemResolucaoFile = file; });
@@ -834,7 +805,6 @@
             }
         });
 
-        // NOVO: Função para fazer upload de uma imagem e retornar a URL
         async function uploadImageAndGetURL(file, questaoId, fieldName) {
             if (!file) return null;
             
@@ -847,7 +817,7 @@
                 return downloadURL;
             } catch (error) {
                 console.error(`Erro no upload da imagem para ${fieldName}:`, error);
-                throw error; // Propaga o erro para ser tratado no submit
+                throw error;
             }
         }
 
@@ -882,7 +852,6 @@
                  return;
             }
 
-            // MODIFICADO: Validação - pelo menos texto ou imagem
             if (!textoValue.trim() && !imagemQuestaoFile && !document.getElementById('imagemQuestaoPreview').src) {
                 alert('A questão deve ter um texto ou uma imagem.');
                 submitBtn.disabled = false; submitBtn.innerHTML = '<i class="fas fa-save btn-icon"></i> Salvar';
@@ -897,18 +866,16 @@
             try {
                 const userQuestoesCollection = db.collection("users").doc(currentUserUID).collection("questoes");
                 
-                // MODIFICADO: Gerar ID da questão ANTES para usar no caminho do Storage
                 const questaoDocRef = editingQuestaoId ? userQuestoesCollection.doc(editingQuestaoId) : userQuestoesCollection.doc();
                 const questaoIdParaUpload = questaoDocRef.id;
                 
                 const questaoExistente = editingQuestaoId ? questoes.find(q => q.id === editingQuestaoId) : null;
 
-                // MODIFICADO: Upload de imagens e obtenção das URLs
                 let imagemQuestaoURL = questaoExistente?.imagemQuestaoURL || null;
                 if (imagemQuestaoFile) {
                     imagemQuestaoURL = await uploadImageAndGetURL(imagemQuestaoFile, questaoIdParaUpload, 'questao');
                 } else if (document.getElementById('imagemQuestaoPreviewContainer').dataset.removeOnSubmit === "true") {
-                    imagemQuestaoURL = null; // Marcou para remover
+                    imagemQuestaoURL = null;
                 }
 
                 let imagemRespostaURL = questaoExistente?.imagemRespostaURL || null;
@@ -932,7 +899,6 @@
                     ownerUID: currentUserUID,
                     revisoes: questaoExistente?.revisoes || {},
                     comentarios: questaoExistente?.comentarios || '',
-                    // MODIFICADO: Campos de imagem
                     imagemQuestaoURL: imagemQuestaoURL,
                     imagemRespostaURL: imagemRespostaURL,
                     imagemResolucaoURL: imagemResolucaoURL,
@@ -981,7 +947,6 @@
             if(viewTipoDisplay) viewTipoDisplay.textContent = q.tipo; 
             if(viewAssuntoDisplay) viewAssuntoDisplay.textContent = q.assunto;
             
-            // MODIFICADO: Limpa e preenche o conteúdo com texto e/ou imagem
             viewQuestaoTextoDisplay.innerHTML = '';
             if (q.texto) viewQuestaoTextoDisplay.innerHTML += q.texto.replace(/\n/g, '<br>');
             if (q.imagemQuestaoURL) viewQuestaoTextoDisplay.innerHTML += `<img src="${q.imagemQuestaoURL}" class="view-image" alt="Imagem da Questão">`;
@@ -1039,7 +1004,6 @@
             if (!q) return;
             editingQuestaoId = id; 
             
-            // MODIFICADO: Limpa campos de imagem antes de preencher
             resetImageField(document.getElementById('imagemQuestaoInput'), document.getElementById('imagemQuestaoPreviewContainer'), (file) => { imagemQuestaoFile = file; });
             resetImageField(document.getElementById('imagemRespostaInput'), document.getElementById('imagemRespostaPreviewContainer'), (file) => { imagemRespostaFile = file; });
             resetImageField(document.getElementById('imagemResolucaoInput'), document.getElementById('imagemResolucaoPreviewContainer'), (file) => { imagemResolucaoFile = file; });
@@ -1053,7 +1017,6 @@
             document.getElementById('questaoResposta').value = q.resposta;
             if(questaoIdInput) questaoIdInput.value = q.id; 
             
-            // MODIFICADO: Preenche os previews de imagem existentes
             if (q.imagemQuestaoURL) {
                 document.getElementById('imagemQuestaoPreview').src = q.imagemQuestaoURL;
                 document.getElementById('imagemQuestaoPreviewContainer').style.display = 'block';
@@ -1071,7 +1034,7 @@
             if (questaoTipoCellGroupControl) questaoTipoCellGroupControl.setActiveCell(q.tipo);
             const solTextEl = document.getElementById('solutionText');
             const solVideoEl = document.getElementById('solutionVideoLink');
-            if (q.solucaoTexto || q.imagemResolucaoURL) { // Modificado para considerar imagem
+            if (q.solucaoTexto || q.imagemResolucaoURL) {
                 if (solutionTypeCellGroupControl) solutionTypeCellGroupControl.setActiveCell('text');
                 if(solTextEl) solTextEl.value = q.solucaoTexto; 
                 if(solVideoEl) solVideoEl.value = '';
@@ -1098,8 +1061,6 @@
         }
         
         async function deleteQuestao(id) {
-            // NOTA: Esta função ainda não deleta as imagens do Storage para manter a simplicidade.
-            // Para deletar, seria necessário pegar as URLs, converter para referências do Storage e chamar .delete() em cada uma.
             if (!currentUserUID) { alert("Você precisa estar logado para excluir questões!"); return; }
             if (confirm('Excluir esta questão permanentemente? Isso também removerá a questão de todos os cronogramas de revisão.')) {
                 try {
@@ -1143,7 +1104,7 @@
             const sortedArr = [...arr].sort((a, b) => {
                 const timeA = a.addedTimestamp instanceof Date ? a.addedTimestamp.getTime() : (typeof a.addedTimestamp === 'number' ? a.addedTimestamp : 0);
                 const timeB = b.addedTimestamp instanceof Date ? b.addedTimestamp.getTime() : (typeof b.addedTimestamp === 'number' ? b.addedTimestamp : 0);
-                return timeA - timeB; // Mais antigo primeiro (ordem de adição)
+                return timeA - timeB;
             });
 
             if(questoesContainer) questoesContainer.innerHTML = ''; 
@@ -1184,7 +1145,6 @@
             });
         }
         
-        // ... (O restante das funções do calendário e navegação permanece o mesmo) ...
         function generateSequentialReviewSchedule() { if (!currentUserUID) return {}; let combinedSchedule = {}; const periods = [ { enemDate: dataEnemDia1, subjects: materiasRevisaoDia1, periodName: 'Dia1' }, { enemDate: dataEnemDia2, subjects: materiasRevisaoDia2, periodName: 'Dia2' } ]; const REVIEW_DAYS_COUNT = 14; const allSortedQuestoes = [...questoes].sort((a, b) => { const timeA = a.addedTimestamp instanceof Date ? a.addedTimestamp.getTime() : (typeof a.addedTimestamp === 'number' ? a.addedTimestamp : 0); const timeB = b.addedTimestamp instanceof Date ? b.addedTimestamp.getTime() : (typeof b.addedTimestamp === 'number' ? b.addedTimestamp : 0); return timeA - timeB; }); periods.forEach(period => { const relevantSortedQuestoes = allSortedQuestoes.filter(q => period.subjects.includes(q.materia)); const reviewDatesForPeriod = []; for (let i = REVIEW_DAYS_COUNT - 1; i >= 0; i--) { const date = new Date(period.enemDate); date.setDate(period.enemDate.getDate() - (i + 1)); const dateStr = date.toISOString().split('T')[0]; if (dateStr !== enemDay1Str && dateStr !== enemDay2Str) { if (!((period.periodName === 'Dia1' && dateStr === enemDay2Str) || (period.periodName === 'Dia2' && dateStr === enemDay1Str))) { reviewDatesForPeriod.push(dateStr); } } } reviewDatesForPeriod.sort(); if (relevantSortedQuestoes.length > 0 && reviewDatesForPeriod.length > 0) { relevantSortedQuestoes.forEach((question, index) => { const targetDayIndex = index % reviewDatesForPeriod.length; const dateKey = reviewDatesForPeriod[targetDayIndex]; if (!combinedSchedule[dateKey]) combinedSchedule[dateKey] = []; if (!combinedSchedule[dateKey].includes(question.id)) { combinedSchedule[dateKey].push(question.id); } }); } }); console.log("Cronograma Gerado Sequencialmente:", combinedSchedule); currentGeneratedSchedule = combinedSchedule; return combinedSchedule; }
         function renderCalendar(year, month, scheduleToRender) { if(!currentMonthYearDisplay || !enemCalendarGrid) return; currentMonthYearDisplay.textContent = `${new Date(year, month).toLocaleString('pt-BR', { month: 'long' })} ${year}`; enemCalendarGrid.innerHTML = ''; const daysOfWeek = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']; daysOfWeek.forEach(day => enemCalendarGrid.insertAdjacentHTML('beforeend', `<div class="calendar-header-cell">${day}</div>`)); const firstDayOfMonth = new Date(year, month, 1).getDay(); const daysInMonth = new Date(year, month + 1, 0).getDate(); for (let i = 0; i < firstDayOfMonth; i++) { enemCalendarGrid.insertAdjacentHTML('beforeend', '<div class="calendar-day-cell empty"></div>'); } for (let day = 1; day <= daysInMonth; day++) { const dayCell = document.createElement('div'); dayCell.className = 'calendar-day-cell'; const dateKey = new Date(year, month, day).toISOString().split('T')[0]; dayCell.dataset.date = dateKey; const dayNumberSpan = document.createElement('span'); dayNumberSpan.textContent = day; dayCell.appendChild(dayNumberSpan); if (dateKey === enemDay1Str || dateKey === enemDay2Str) { dayCell.classList.add('enem-exam-day'); } else { if (scheduleToRender && scheduleToRender[dateKey] && scheduleToRender[dateKey].length > 0) { dayCell.classList.add('has-review'); dayCell.innerHTML += `<span class="review-q-count">${scheduleToRender[dateKey].length}Q</span>`; } dayCell.addEventListener('click', () => handleDayClick(dateKey, dayCell, scheduleToRender)); } if (selectedReviewDate === dateKey && !dayCell.classList.contains('enem-exam-day')) { dayCell.classList.add('selected'); } enemCalendarGrid.appendChild(dayCell); } if(prevMonthBtn) prevMonthBtn.disabled = (year === 2025 && month === 9); if(nextMonthBtn) nextMonthBtn.disabled = (year === 2025 && month === 10); }
         function handleDayClick(dateKey, cellElement, scheduleForDayClick) { if(!selectedDayTitle || !reviewQuestionsGrid) return; if (cellElement && cellElement.classList.contains('enem-exam-day')) { selectedReviewDate = dateKey; document.querySelectorAll('.calendar-day-cell.selected').forEach(c => c.classList.remove('selected')); if(cellElement) cellElement.classList.add('selected'); selectedDayTitle.textContent = `Dia da Prova do ENEM!`; reviewQuestionsGrid.innerHTML = `<p style="color: var(--text-color); text-align:center; grid-column: 1 / -1;">Boa prova! Nenhuma revisão agendada.</p>`; return; } selectedReviewDate = dateKey; document.querySelectorAll('.calendar-day-cell.selected').forEach(c => c.classList.remove('selected')); if (cellElement) cellElement.classList.add('selected'); const dateObj = new Date(dateKey + 'T00:00:00Z'); selectedDayTitle.textContent = `Revisão para ${dateObj.toLocaleDateString('pt-BR', {timeZone: 'UTC', weekday: 'long', day:'2-digit', month:'2-digit'})}`; reviewQuestionsGrid.innerHTML = ''; const questionIdsForDay = (scheduleForDayClick && scheduleForDayClick[dateKey]) ? scheduleForDayClick[dateKey] : []; if (questionIdsForDay.length > 0) { questionIdsForDay.forEach(qId => { const questao = questoes.find(q => q.id === qId); if (questao) { const card = document.createElement('div'); card.className = 'review-questao-card'; const isChecked = (questao.revisoes && questao.revisoes[dateKey] === true); card.innerHTML = ` <p><strong>${questao.materia}</strong></p> <p>${(questao.assunto || '').substring(0,50)}${(questao.assunto || '').length > 50 ? '...' : ''}</p> <p style="font-size:0.7em; color:#888;">ID: ${qId}</p> <div class="actions"> <button class="view-btn view-btn-revisao" onclick="viewQuestao('${questao.id}')"><i class="fas fa-eye"></i> Ver</button> <div class="checkbox-group"> <input type="checkbox" id="rev_${dateKey}_${qId}" data-date="${dateKey}" data-qid="${qId}" ${isChecked ? 'checked' : ''}> <label for="rev_${dateKey}_${qId}">Revisada</label> </div> </div>`; reviewQuestionsGrid.appendChild(card); const checkbox = card.querySelector(`input[type="checkbox"]`); if (checkbox) checkbox.addEventListener('change', handleRevisadaChange); } }); } else { reviewQuestionsGrid.innerHTML = `<p style="color: var(--text-color); text-align:center; grid-column: 1 / -1;">Nenhuma questão agendada para este dia.</p>`; } }
@@ -1258,3 +1218,4 @@
     </script>
 </body>
 </html>
+
