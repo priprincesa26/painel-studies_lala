@@ -15,7 +15,7 @@
             apiKey: "AIzaSyD6msk2NG3gfyPKhjZJ4HB1X6SJ8ICzSMg", // MANTENHA A SUA API KEY ORIGINAL
             authDomain: "painel-de-controle-para-o-enem.firebaseapp.com",
             projectId: "painel-de-controle-para-o-enem",
-            storageBucket: "painel-de-controle-para-o-enem.firebasestorage.app",
+            storageBucket: "painel-de-controle-para-o-enem.appspot.com", // CORRIGIDO
             messagingSenderId: "144604369875",
             appId: "1:144604369875:web:c113d74ba1b0ddd1629526",
             measurementId: "G-W7PM1J1FNN"
@@ -44,7 +44,6 @@
 
         html, body {
             height: 100%;
-            /* REMOVED: overflow: hidden; This allows the main page to scroll if needed */
         }
 
         body {
@@ -71,18 +70,18 @@
         
         .main-navigation {
             display: flex;
-            justify-content: space-between; /* Changed for better spacing with logout */
+            justify-content: space-between;
             align-items: center;
             background-color: var(--primary-dark);
-            padding: 10px 20px; /* Added horizontal padding */
+            padding: 10px 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             z-index: 10;
         }
 
         .nav-group {
             display: flex;
-            justify-content: center; /* Keeps main nav buttons centered */
-            flex-grow: 1; /* Allows this group to take up space */
+            justify-content: center;
+            flex-grow: 1;
         }
 
         .main-nav-btn {
@@ -117,7 +116,6 @@
         .iframe-container {
             flex-grow: 1; 
             position: relative; 
-            /* REMOVED: overflow: hidden; This was preventing iframes from showing their own scrollbars if their content overflowed. */
         }
 
         .page-iframe {
@@ -136,20 +134,20 @@
         
         @media (max-width: 768px) {
             .main-navigation {
-                flex-direction: column; /* Stack nav and logout */
+                flex-direction: column;
                 padding: 10px;
             }
             .nav-group {
                 width: 100%;
                 flex-wrap: wrap; 
-                justify-content: space-around; /* Distribute buttons */
+                justify-content: space-around;
                 margin-bottom: 10px;
             }
             .main-nav-btn {
-                flex-basis: calc(33.33% - 10px); /* Tries for 3 buttons, adjust as needed */
+                flex-basis: calc(33.33% - 10px);
                 justify-content: center;
                 margin: 5px;
-                padding: 8px 10px; /* Smaller padding */
+                padding: 8px 10px;
                 font-size: 0.9rem;
             }
              .app-header h1 {
@@ -192,9 +190,9 @@
     </nav>
 
     <div class="iframe-container">
-        <iframe src="e.html" class="page-iframe active" id="iframeQuestoes" title="Caderno de Questões"></iframe>
+        <iframe src="e.html?v=2" class="page-iframe active" id="iframeQuestoes" title="Caderno de Questões"></iframe>
         <iframe src="redacoes.html" class="page-iframe" id="iframeRedacoes" title="Minhas Redações"></iframe>
-        <iframe src="simulados.html" class="page-iframe" id="iframeSimulados" title="Acompanhamento de Simulados ENEM"></iframe>
+        <iframe src="simulados.html?v=2" class="page-iframe" id="iframeSimulados" title="Acompanhamento de Simulados ENEM"></iframe>
     </div>
 
     <script>
@@ -202,7 +200,6 @@
             firebase.auth().onAuthStateChanged(user => {
                 if (user && user.emailVerified) {
                     console.log("index.html: User is logged in and email verified via Firebase Auth.");
-                    // sessionStorage.setItem('loggedInFirebaseUserUID', user.uid); // Removido pois já deve estar no e.html e outros iframes
                     initializeLoggedInPage();
                 } else {
                     if (user && !user.emailVerified) {
@@ -211,7 +208,6 @@
                     } else {
                         console.log("index.html: User not logged in via Firebase Auth. Redirecting to login.html");
                     }
-                    // sessionStorage.removeItem('loggedInFirebaseUserUID'); // Removido pois já deve estar no e.html e outros iframes
                     localStorage.removeItem('activeIframe');
                     window.location.href = 'login.html';
                 }
@@ -241,7 +237,6 @@
 
             logoutButton.addEventListener('click', () => {
                 firebase.auth().signOut().then(() => {
-                    // sessionStorage.removeItem('loggedInFirebaseUserUID'); // Removido, o login.html deve limpar se necessário
                     localStorage.removeItem('activeIframe');
                     window.location.href = 'login.html';
                 }).catch((error) => {
