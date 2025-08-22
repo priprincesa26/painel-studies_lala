@@ -350,18 +350,9 @@
                     <div class="form-group">
                         <label for="simuladoTypeInputEl">Tipo de simulado</label> 
                         <select id="simuladoTypeInputEl" required>
-                            <option value="">Selecione...</option>
-                            <option value="Anglo">Anglo</option>
-                            <option value="Bernoulli">Bernoulli</option>
-                            <option value="Evolucional">Evolucional</option>
-                            <option value="Hexag">Hexag</option>
-                            <option value="Objetivo">Objetivo</option>
-                            <option value="Poliedro">Poliedro</option>
-                            <option value="Sas">Sas</option>
-                            <option value="Somos">Somos</option>
-                            <option value="Trieduc">Trieduc</option>
-                            <option value="Prova antiga">Prova antiga</option>
-                            <option value="Outro">Outro</option>
+                            <option value="">Selecione...</option> <option value="Sas">Sas</option> <option value="Poliedro">Poliedro</option>
+                            <option value="Hexag">Hexag</option> <option value="Somos">Somos</option>
+                            <option value="Bernoulli">Bernoulli</option> <option value="Prova antiga">Prova antiga</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -396,10 +387,10 @@
     <script>
         // ######### INÍCIO DA SEÇÃO DE CONFIGURAÇÃO DO FIREBASE #########
         const firebaseConfig = {
-            apiKey: "AIzaSyD6msk2NG3gfyPKhjZJ4HB1X6SJ8ICzSMg",
+            apiKey: "AIzaSyD6msk2NG3gfyPKhjZJ4HB1X6SJ8ICzSMg", // SUA API KEY
             authDomain: "painel-de-controle-para-o-enem.firebaseapp.com",
             projectId: "painel-de-controle-para-o-enem",
-            storageBucket: "painel-de-controle-para-o-enem.appspot.com", // CORRIGIDO
+            storageBucket: "painel-de-controle-para-o-enem.firebasestorage.app",
             messagingSenderId: "144604369875",
             appId: "1:144604369875:web:c113d74ba1b0ddd1629526",
             measurementId: "G-W7PM1J1FNN"
@@ -646,9 +637,10 @@
                 const snapshot = await ref.orderBy("date", "desc").get();
                 simulados = snapshot.docs.map(doc => {
                     const data = doc.data();
-                    const date = data.date && data.date.toDate ? data.date.toDate() : new Date(0);
+                    // Converte Timestamps para objetos Date
+                    const date = data.date && data.date.toDate ? data.date.toDate() : new Date(0); // Fallback
                     const addedTimestamp = data.addedTimestamp && data.addedTimestamp.toDate ? data.addedTimestamp.toDate() : new Date(0);
-                    const lastModifiedTimestamp = data.lastModifiedTimestamp && data.lastModifiedTimestamp.toDate ? data.lastModifiedTimestamp.toDate() : date;
+                    const lastModifiedTimestamp = data.lastModifiedTimestamp && data.lastModifiedTimestamp.toDate ? data.lastModifiedTimestamp.toDate() : date; // Fallback para data do simulado
 
                     return { 
                         id: doc.id, ...data,
@@ -675,6 +667,10 @@
     </script>
 </body>
 </html>
+    </script>
+</body>
+</html>
+
 
 
 
