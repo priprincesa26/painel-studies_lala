@@ -6,13 +6,12 @@
     <title>Painel de Estudos ENEM</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- BIBLIOTECAS DO FIREBASE -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script>
         // CONFIGURAÇÃO DO FIREBASE
         const firebaseConfig = {
-            apiKey: "AIzaSyD6msk2NG3gfyPKhjZJ4HB1X6SJ8ICzSMg", // MANTENHA A SUA API KEY ORIGINAL
+            apiKey: "AIzaSyD6msk2NG3gfyPKhjZJ4HB1X6SJ8ICzSMg",
             authDomain: "painel-de-controle-para-o-enem.firebaseapp.com",
             projectId: "painel-de-controle-para-o-enem",
             storageBucket: "painel-de-controle-para-o-enem.appspot.com", // CORRIGIDO
@@ -20,231 +19,108 @@
             appId: "1:144604369875:web:c113d74ba1b0ddd1629526",
             measurementId: "G-W7PM1J1FNN"
         };
-        if (!firebase.apps.length) { // Evita reinicializar o app
+        if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
     </script>
     <style>
         :root {
-            --primary-color: #ff4d8d;
-            --primary-light: #ff85b2;
-            --primary-dark: #e6005c;
-            --background-color: #fff0f5;
-            --card-color: #ffffff; 
-            --text-color: #4a4a4a;
-            --border-color: #ffd6e7; 
-            --shadow-color: rgba(255, 77, 141, 0.2);
+            --primary-color: #ff4d8d; --primary-light: #ff85b2; --primary-dark: #e6005c;
+            --background-color: #fff0f5; --card-color: #ffffff; --text-color: #4a4a4a;
+            --border-color: #ffd6e7; --shadow-color: rgba(255, 77, 141, 0.2);
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html, body {
-            height: 100%;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; }
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
+            font-family: 'Poppins', sans-serif; background-color: var(--background-color);
+            color: var(--text-color); display: flex; flex-direction: column;
         }
-
         .app-header {
-            text-align: center;
-            padding: 20px;
+            text-align: center; padding: 20px;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-            box-shadow: 0 4px 8px var(--shadow-color);
-            z-index: 10; 
+            color: white; box-shadow: 0 4px 8px var(--shadow-color); z-index: 10;
         }
-
-        .app-header h1 {
-            font-size: 2.2rem; 
-            margin: 0;
-        }
-        
+        .app-header h1 { font-size: 2.2rem; margin: 0; }
         .main-navigation {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: var(--primary-dark);
-            padding: 10px 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            z-index: 10;
+            display: flex; justify-content: space-between; align-items: center;
+            background-color: var(--primary-dark); padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 10;
         }
-
-        .nav-group {
-            display: flex;
-            justify-content: center;
-            flex-grow: 1;
-        }
-
+        .nav-group { display: flex; justify-content: center; flex-grow: 1; }
         .main-nav-btn {
-            background: none; border: none; color: white;
-            padding: 10px 20px; margin: 0 8px; cursor: pointer;
-            font-size: 1rem; font-weight: 500; border-radius: 6px;
-            transition: background-color 0.3s ease;
-            display: flex; align-items: center; gap: 8px;
+            background: none; border: none; color: white; padding: 10px 20px; margin: 0 8px;
+            cursor: pointer; font-size: 1rem; font-weight: 500; border-radius: 6px;
+            transition: background-color 0.3s ease; display: flex; align-items: center; gap: 8px;
         }
         .main-nav-btn i { font-size: 1.1em; }
         .main-nav-btn.active { background-color: var(--primary-color); }
         .main-nav-btn:hover:not(.active) { background-color: var(--primary-light); }
-
         .logout-btn {
-            background-color: var(--primary-light);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            background-color: var(--primary-light); color: white; border: none;
+            padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 0.9rem;
+            font-weight: 500; transition: background-color 0.3s ease;
+            display: flex; align-items: center; gap: 8px;
         }
-        .logout-btn:hover {
-            background-color: var(--primary-color);
-        }
-
-        .iframe-container {
-            flex-grow: 1; 
-            position: relative; 
-        }
-
-        .page-iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: none; 
-        }
-
-        .page-iframe.active {
-            display: block; 
-        }
+        .logout-btn:hover { background-color: var(--primary-color); }
+        .iframe-container { flex-grow: 1; position: relative; }
+        .page-iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: none; }
+        .page-iframe.active { display: block; }
         
         @media (max-width: 768px) {
-            .main-navigation {
-                flex-direction: column;
-                padding: 10px;
-            }
-            .nav-group {
-                width: 100%;
-                flex-wrap: wrap; 
-                justify-content: space-around;
-                margin-bottom: 10px;
-            }
-            .main-nav-btn {
-                flex-basis: calc(33.33% - 10px);
-                justify-content: center;
-                margin: 5px;
-                padding: 8px 10px;
-                font-size: 0.9rem;
-            }
-             .app-header h1 {
-                font-size: 1.8rem;
-            }
-            .logout-btn {
-                width: 100%;
-                justify-content: center;
-                margin-top: 5px;
-            }
+            .main-navigation { flex-direction: column; padding: 10px; }
+            .nav-group { width: 100%; flex-wrap: wrap; justify-content: space-around; margin-bottom: 10px; }
+            .main-nav-btn { flex-basis: calc(33.33% - 10px); justify-content: center; margin: 5px; padding: 8px 10px; font-size: 0.9rem; }
+            .app-header h1 { font-size: 1.8rem; }
+            .logout-btn { width: 100%; justify-content: center; margin-top: 5px; }
         }
-         @media (max-width: 480px) {
-            .main-nav-btn {
-                flex-basis: 100%; 
-            }
-         }
-
+        @media (max-width: 480px) { .main-nav-btn { flex-basis: 100%; } }
     </style>
 </head>
 <body>
-    <header class="app-header">
-        <h1>Painel de Estudos Integrado</h1>
-    </header>
-
+    <header class="app-header"><h1>Painel de Estudos Integrado</h1></header>
     <nav class="main-navigation">
         <div class="nav-group">
-            <button class="main-nav-btn active" data-target-iframe="iframeQuestoes">
-                <i class="fas fa-tasks"></i> Questões
-            </button>
-            <button class="main-nav-btn" data-target-iframe="iframeRedacoes">
-                <i class="fas fa-file-signature"></i> Redações
-            </button>
-            <button class="main-nav-btn" data-target-iframe="iframeSimulados">
-                <i class="fas fa-chart-line"></i> Simulados
-            </button>
+            <button class="main-nav-btn active" data-target-iframe="iframeQuestoes"><i class="fas fa-tasks"></i> Questões</button>
+            <button class="main-nav-btn" data-target-iframe="iframeRedacoes"><i class="fas fa-file-signature"></i> Redações</button>
+            <button class="main-nav-btn" data-target-iframe="iframeSimulados"><i class="fas fa-chart-line"></i> Simulados</button>
         </div>
-        <button class="logout-btn" id="logoutBtn">
-            <i class="fas fa-sign-out-alt"></i> Sair
-        </button>
+        <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Sair</button>
     </nav>
-
     <div class="iframe-container">
-        <iframe src="e.html?v=2" class="page-iframe active" id="iframeQuestoes" title="Caderno de Questões"></iframe>
-        <iframe src="redacoes.html" class="page-iframe" id="iframeRedacoes" title="Minhas Redações"></iframe>
-        <iframe src="simulados.html?v=2" class="page-iframe" id="iframeSimulados" title="Acompanhamento de Simulados ENEM"></iframe>
+        <iframe src="e.html?v=3" class="page-iframe active" id="iframeQuestoes" title="Caderno de Questões"></iframe>
+        <iframe src="redacoes.html?v=3" class="page-iframe" id="iframeRedacoes" title="Minhas Redações"></iframe>
+        <iframe src="simulados.html?v=3" class="page-iframe" id="iframeSimulados" title="Acompanhamento de Simulados ENEM"></iframe>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             firebase.auth().onAuthStateChanged(user => {
                 if (user && user.emailVerified) {
-                    console.log("index.html: User is logged in and email verified via Firebase Auth.");
                     initializeLoggedInPage();
                 } else {
                     if (user && !user.emailVerified) {
-                        console.log("index.html: User logged in but email not verified. Redirecting to login.html");
                         alert("Por favor, verifique seu e-mail para continuar. Redirecionando para a página de login.");
-                    } else {
-                        console.log("index.html: User not logged in via Firebase Auth. Redirecting to login.html");
                     }
                     localStorage.removeItem('activeIframe');
                     window.location.href = 'login.html';
                 }
             });
         });
-
         function initializeLoggedInPage() {
             const navButtons = document.querySelectorAll('.main-nav-btn');
             const iframes = document.querySelectorAll('.page-iframe');
             const logoutButton = document.getElementById('logoutBtn');
-
             function showIframe(targetIframeId) {
-                iframes.forEach(iframe => {
-                    iframe.classList.toggle('active', iframe.id === targetIframeId);
-                });
-                navButtons.forEach(button => {
-                    button.classList.toggle('active', button.dataset.targetIframe === targetIframeId);
-                });
+                iframes.forEach(iframe => iframe.classList.toggle('active', iframe.id === targetIframeId));
+                navButtons.forEach(button => button.classList.toggle('active', button.dataset.targetIframe === targetIframeId));
                 localStorage.setItem('activeIframe', targetIframeId); 
             }
-
-            navButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    showIframe(button.dataset.targetIframe);
-                });
-            });
-
+            navButtons.forEach(button => button.addEventListener('click', () => showIframe(button.dataset.targetIframe)));
             logoutButton.addEventListener('click', () => {
                 firebase.auth().signOut().then(() => {
                     localStorage.removeItem('activeIframe');
                     window.location.href = 'login.html';
-                }).catch((error) => {
-                    console.error("Logout error", error);
-                    alert("Erro ao desconectar.");
-                });
+                }).catch(error => console.error("Logout error", error));
             });
-
             const lastActiveIframe = localStorage.getItem('activeIframe');
             if (lastActiveIframe && document.getElementById(lastActiveIframe)) {
                 showIframe(lastActiveIframe);
@@ -255,3 +131,6 @@
     </script>
 </body>
 </html>
+</body>
+</html>
+
