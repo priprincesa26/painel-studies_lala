@@ -65,18 +65,22 @@
             font-weight: 500;
             color: var(--primary-dark);
         }
+        
+        /* MODIFICADO: Estilo geral para inputs */
         .form-group input { 
             width: 100%;
-            padding: 12px 15px;
+            padding: 12px 15px; /* Padding direito geral */
             border: 2px solid var(--border-color);
             border-radius: 8px;
             font-size: 1rem;
             font-family: 'Poppins', sans-serif;
             transition: border-color 0.3s, box-shadow 0.3s; 
         }
+        /* MODIFICADO: Ajuste específico para inputs dentro de .input-with-icon */
         .input-with-icon input {
-            padding-right: 45px;
+            padding-right: 45px; /* Mais espaço para o ícone consistentemente */
         }
+
         .form-group input:focus {
             outline: none;
             border-color: var(--primary-color);
@@ -92,11 +96,12 @@
             transform: translateY(-50%);
             color: #ccc;
             cursor: pointer;
-            z-index: 2;
+            z-index: 2; /* Para garantir que o ícone fique sobre o input */
         }
          .input-with-icon .icon.toggle-password:hover {
             color: var(--primary-color);
         }
+        
         .submit-btn {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: white; border: none; padding: 12px 20px; 
@@ -140,6 +145,7 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
         .toggle-form {
             margin-top: 25px;
             font-size: 0.9rem;
@@ -151,6 +157,7 @@
             cursor: pointer;
         }
         .toggle-form a:hover { text-decoration: underline; }
+
         .message { 
             padding: 10px;
             margin-bottom: 20px;
@@ -160,6 +167,7 @@
         }
         .message.error { background-color: rgba(210, 51, 105, 0.1); color: var(--danger-color); border: 1px solid var(--danger-color); }
         .message.success { background-color: rgba(6, 214, 160, 0.1); color: var(--success-color); border: 1px solid var(--success-color); }
+        
         .password-rules {
             font-size: 0.8rem;
             color: #777;
@@ -174,6 +182,7 @@
         .password-rules li.valid::before { content: "✓ "; }
         .password-rules li.invalid { color: var(--danger-color); }
         .password-rules li.invalid::before { content: "✗ "; }
+
         .consent-group {
             margin-top: 15px;
             margin-bottom: 20px;
@@ -193,6 +202,7 @@
             font-weight: normal; 
             color: #555; 
         }
+
         .success-modal-overlay {
             display: none; 
             position: fixed;
@@ -276,6 +286,57 @@
             from { transform: scale(1) rotate(-5deg); }
             to { transform: scale(1.1) rotate(5deg); }
         }
+
+        .balloon-turbo {
+            position: fixed; 
+            bottom: -120px; 
+            width: 45px;
+            height: 55px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; 
+            z-index: 9990; 
+            opacity: 0; 
+            filter: drop-shadow(0 3px 4px rgba(0,0,0,0.15));
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), var(--balloon-color, #ff6b9e));
+            animation: float-up-turbo 6s ease-in forwards; 
+        }
+        .balloon-turbo::before { 
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            width: 1px;
+            height: 30px;
+            background: linear-gradient(to bottom, #aaa, #ddd);
+            transform: translateX(-50%);
+        }
+        .balloon-turbo::after { 
+            content: "";
+            position: absolute;
+            bottom: -38px; 
+            left: 50%;
+            width: 5px;
+            height: 8px;
+            background-color: rgba(0,0,0,0.15);
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+        @keyframes float-up-turbo {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0.8;
+            }
+            20% { 
+                transform: translateY(-20vh) rotate(-5deg) scale(0.9);
+                opacity: 0.95;
+            }
+            80% { 
+                transform: translateY(-130vh) rotate(5deg) scale(1);
+            }
+            100% {
+                transform: translateY(-150vh) rotate(0deg) scale(0.95);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -298,6 +359,7 @@
             <button type="submit" class="submit-btn"><span>Entrar</span></button>
             <p class="toggle-form">Não tem uma conta? <a id="showRegister">Crie uma aqui</a></p>
         </form>
+
         <form id="registerForm" style="display: none;">
             <h1>Criar Conta</h1>
             <p class="subtitle">Preencha os campos para se registrar</p>
@@ -340,6 +402,7 @@
             <p class="toggle-form">Já tem uma conta? <a id="showLogin">Faça login aqui</a></p>
         </form>
     </div>
+
     <div id="successModal" class="success-modal-overlay">
         <div class="success-modal-content">
             <button id="closeSuccessBtn" class="close-success-modal">×</button>
@@ -353,17 +416,18 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
     <script>
         // ######### INÍCIO DA SEÇÃO DE CONFIGURAÇÃO DO FIREBASE #########
         const firebaseConfig = {
-            apiKey: "AIzaSyD6msk2NG3gfyPKhjZJ4HB1X6SJ8ICzSMg",
-            authDomain: "painel-de-controle-para-o-enem.firebaseapp.com",
-            projectId: "painel-de-controle-para-o-enem",
-            storageBucket: "painel-de-controle-para-o-enem.appspot.com", // CORRIGIDO
-            messagingSenderId: "144604369875",
-            appId: "1:144604369875:web:c113d74ba1b0ddd1629526",
-            measurementId: "G-W7PM1J1FNN"
-        };
+  apiKey: "AIzaSyD6msk2NG3gfyPKhjZJ4HB1X6SJ8ICzSMg",
+  authDomain: "painel-de-controle-para-o-enem.firebaseapp.com",
+  projectId: "painel-de-controle-para-o-enem",
+  storageBucket: "painel-de-controle-para-o-enem.firebasestorage.app",
+  messagingSenderId: "144604369875",
+  appId: "1:144604369875:web:c113d74ba1b0ddd1629526",
+  measurementId: "G-W7PM1J1FNN"
+};
         // ######### FIM DA SEÇÃO DE CONFIGURAÇÃO DO FIREBASE #########
 
         firebase.initializeApp(firebaseConfig);
@@ -376,15 +440,18 @@
         const showLoginLink = document.getElementById('showLogin');
         const loginMessage = document.getElementById('loginMessage');
         const registerErrorMessage = document.getElementById('registerMessage');
+
         const registerEmailInput = document.getElementById('registerEmail');
         const registerPasswordInput = document.getElementById('registerPassword');
         const registerConfirmPasswordInput = document.getElementById('confirmPassword');
         const consentCheckbox = document.getElementById('consentCheckbox'); 
         const registerSubmitBtn = document.getElementById('registerSubmitBtn'); 
+
         const lengthRule = document.getElementById('lengthRule');
         const upperRule = document.getElementById('upperRule');
         const digitRule = document.getElementById('digitRule');
         const symbolRule = document.getElementById('symbolRule');
+
         const successModal = document.getElementById('successModal');
         const closeSuccessBtn = document.getElementById('closeSuccessBtn');
 
@@ -396,14 +463,27 @@
                 this.classList.toggle('fa-eye-slash');
             });
         });
+
         function displayMessage(element, messageText, type = 'error') {
             element.textContent = messageText;
             element.className = `message ${type}`;
             element.style.display = 'block';
         }
-        function hideMessage(element) { if (element) element.style.display = 'none'; }
-        function showLoading(button) { button.classList.add('loading'); button.disabled = true; }
-        function hideLoading(button) { button.classList.remove('loading'); button.disabled = false; }
+        
+        function hideMessage(element) {
+            if (element) element.style.display = 'none';
+        }
+
+        function showLoading(button) {
+            button.classList.add('loading');
+            button.disabled = true;
+        }
+
+        function hideLoading(button) {
+            button.classList.remove('loading');
+            button.disabled = false;
+        }
+
         showRegisterLink.addEventListener('click', (e) => {
             e.preventDefault();
             loginForm.style.display = 'none';
@@ -411,6 +491,7 @@
             registerForm.style.display = 'block';
             hideMessage(registerErrorMessage);
         });
+
         showLoginLink.addEventListener('click', (e) => {
             e.preventDefault();
             registerForm.style.display = 'none';
@@ -418,6 +499,7 @@
             loginForm.style.display = 'block';
             hideMessage(loginMessage);
         });
+        
         if(closeSuccessBtn) {
             closeSuccessBtn.addEventListener('click', () => {
                 successModal.classList.remove('show');
@@ -432,26 +514,35 @@
                 }
             });
         }
+
         function validatePasswordRealtime() { 
             const pass = registerPasswordInput.value; 
             let isValid = true;
-            if (pass.length >= 8 && pass.length <= 12) { lengthRule.className = 'valid'; } else { lengthRule.className = 'invalid'; isValid = false; }
-            if (/[A-Z]/.test(pass)) { upperRule.className = 'valid'; } else { upperRule.className = 'invalid'; isValid = false; }
-            if ((pass.match(/\d/g) || []).length >= 2) { digitRule.className = 'valid'; } else { digitRule.className = 'invalid'; isValid = false; }
-            if ((pass.match(/[@!$%&]/g) || []).length >= 2) { symbolRule.className = 'valid'; } else { symbolRule.className = 'invalid'; isValid = false; }
+            if (pass.length >= 8 && pass.length <= 12) { lengthRule.className = 'valid'; } 
+            else { lengthRule.className = 'invalid'; isValid = false; }
+            if (/[A-Z]/.test(pass)) { upperRule.className = 'valid'; } 
+            else { upperRule.className = 'invalid'; isValid = false; }
+            if ((pass.match(/\d/g) || []).length >= 2) { digitRule.className = 'valid'; } 
+            else { digitRule.className = 'invalid'; isValid = false; }
+            if ((pass.match(/[@!$%&]/g) || []).length >= 2) { symbolRule.className = 'valid'; } 
+            else { symbolRule.className = 'invalid'; isValid = false; }
             return isValid;
         }
         if(registerPasswordInput) registerPasswordInput.addEventListener('input', validatePasswordRealtime);
+
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             hideMessage(registerErrorMessage);
+
             if (!consentCheckbox.checked) { 
                 displayMessage(registerErrorMessage, "Você deve declarar estar ciente dos termos para se registrar.");
                 return;
             }
+
             const email = registerEmailInput.value;
             const password = registerPasswordInput.value;
             const confirmPassword = registerConfirmPasswordInput.value;
+
             if (!email || !registerEmailInput.checkValidity()) { 
                 displayMessage(registerErrorMessage, "Por favor, insira um endereço de e-mail válido.");
                 registerEmailInput.focus();
@@ -466,17 +557,24 @@
                 registerConfirmPasswordInput.focus();
                 return;
             }
+
             showLoading(registerSubmitBtn); 
+
             try {
                 const userCredential = await auth.createUserWithEmailAndPassword(email, password);
                 const user = userCredential.user;
+                
                 await db.collection("users").doc(user.uid).set({
                     email: user.email,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
+                
                 await user.sendEmailVerification();
+                
                 registerForm.reset(); 
                 successModal.classList.add('show'); 
+                triggerCelebration(); 
+
             } catch (error) {
                 console.error("Erro no registro:", error);
                 if (error.code === 'auth/email-already-in-use') {
@@ -492,29 +590,37 @@
                 hideLoading(registerSubmitBtn); 
             }
         });
+
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             hideMessage(loginMessage);
             const loginSubmitBtn = loginForm.querySelector('.submit-btn');
             showLoading(loginSubmitBtn);
+
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
+
             if (!email || !password) {
                 displayMessage(loginMessage, "Por favor, preencha e-mail e senha.");
                 hideLoading(loginSubmitBtn);
                 return;
             }
+
             try {
                 const userCredential = await auth.signInWithEmailAndPassword(email, password);
                 const user = userCredential.user;
+
                 if (!user.emailVerified) {
                     displayMessage(loginMessage, "Seu e-mail ainda não foi verificado. Por favor, clique no link enviado para seu e-mail.", "info");
                     hideLoading(loginSubmitBtn);
                     return; 
                 }
+
                 sessionStorage.setItem('loggedInFirebaseUserUID', user.uid);
                 sessionStorage.setItem('loggedInUserDisplay', user.email); 
+                
                 setTimeout(() => { window.location.href = 'index.html'; }, 500);
+
             } catch (error) {
                 console.error("Erro no login:", error);
                 if (error.code === 'auth/user-not-found' || 
@@ -524,14 +630,98 @@
                     displayMessage(loginMessage, "E-mail ou senha inválidos.");
                 } else if (error.code === 'auth/too-many-requests') {
                     displayMessage(loginMessage, "Muitas tentativas de login falharam. Tente novamente mais tarde.");
-                } else {
+                }
+                 else {
                     displayMessage(loginMessage, "Erro ao fazer login: " + error.message);
                 }
             } finally {
                 hideLoading(loginSubmitBtn);
             }
         });
+
+        function triggerCelebration() {
+            setTimeout(() => { 
+                confettiCelebration(); 
+                createTurboBalloons();  
+            }, 200); 
+        }
+
+        function confettiCelebration() {
+            const duration = 5 * 1000; 
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 35, spread: 360, ticks: 90, zIndex: 9999 }; 
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+                const particleCount = 100 * (timeLeft / duration); 
+
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 }, 
+                    colors: ['#ff6b9e', '#d23369', '#FFD700', '#40E0D0', '#9370DB', '#FF1493'],
+                    scalar: randomInRange(0.8, 1.5),
+                    shapes: ['circle', 'square', 'star'] 
+                }));
+            }, 250);
+
+            const rainDefaults = { angle: 90, spread: 120, startVelocity: 50, origin: { x: 0.5, y: -0.1 }, zIndex: 9999};
+            let rainInterval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) {
+                    return clearInterval(rainInterval);
+                }
+                confetti(Object.assign({}, rainDefaults, { 
+                    particleCount: 50, 
+                    colors: ['#FFB6C1', '#ADD8E6', '#E0FFFF', '#FAFAD2', '#90EE90'],
+                    scalar: randomInRange(0.6, 1.2)
+                }));
+            }, 400);
+        }
+
+        function createTurboBalloons() {
+            const balloonCount = 20; 
+            const pastelColors = [
+                '#FFB6C1', '#FFD700', '#98FB98', '#87CEFA',
+                '#DDA0DD', '#FFA07A', '#FFDEAD', '#B0E0E6',
+                '#F0E68C', '#FF69B4', '#7FFFD4', '#FFC0CB',
+                '#ADD8E6', '#F08080', '#E0FFFF', '#FAFAD2'
+            ];
+
+            for (let i = 0; i < balloonCount; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon-turbo';
+                
+                const size = 40 + Math.random() * 25;
+                balloon.style.width = `${size}px`;
+                balloon.style.height = `${size * 1.2}px`;
+                balloon.style.left = `${Math.random() * 90 + 5}%`; 
+                
+                const randomColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];
+                balloon.style.setProperty('--balloon-color', randomColor); 
+                // Adicionando a cor de fundo diretamente também, caso --balloon-color não seja pego por algum motivo (embora deveria)
+                balloon.style.backgroundColor = randomColor;
+
+
+                const duration = 4 + Math.random() * 4; 
+                const delay = Math.random() * 2; 
+                balloon.style.animation = `float-up-turbo ${duration}s ease-out ${delay}s forwards`;
+                
+                document.body.appendChild(balloon);
+                
+                balloon.addEventListener('animationend', () => {
+                    if (balloon.parentNode) balloon.remove();
+                });
+            }
+        }
     </script>
 </body>
 </html>
+
 
